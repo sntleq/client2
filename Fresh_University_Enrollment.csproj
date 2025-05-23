@@ -122,7 +122,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Auth\LoginController.cs" />
     <Compile Include="Controllers\Auth\SIgnUpController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -175,6 +177,10 @@
     <Content Include="Views\Admin\Dashboard.html" />
     <Content Include="Views\Admin\EditProgram.html" />
     <Content Include="Views\Admin\Program.html" />
+    <Content Include="Views\Admin\AddProgram.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\EditProgram.cshtml" />
+    <Content Include="Views\Admin\Program.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\LoginAdmin.cshtml" />
     <Content Include="Views\Auth\LoginProgramHead.cshtml" />
@@ -190,10 +196,10 @@
     <Content Include="Views\Program-Head\EnrollmentApproval.html" />
     <Content Include="Views\Program-Head\SetSchedules.html" />
     <Content Include="Views\Program-Head\StaffManagement.html" />
-    <Content Include="Views\Shared\AdminHeader.html" />
+    <Content Include="Views\Shared\_AdminHeader.cshtml" />
     <Content Include="Views\Shared\_MainHeader.cshtml" />
-    <Content Include="Views\Shared\ProgramHeadHeader.html" />
-    <Content Include="Views\Shared\TeacherHeader.html" />
+    <Content Include="Views\Shared\ProgramHeadHeader.cshtml" />
+    <Content Include="Views\Shared\TeacherHeader.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
