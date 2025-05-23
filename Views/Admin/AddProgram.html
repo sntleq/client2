@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Program Course</title>
+    <link rel="stylesheet" href="../../Content/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-section {
+            padding: 30px;
+            flex-grow: 1;
+            margin-top: 56px; /* Adjust based on header height to prevent overlap */
+        }
+        .form-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="admin-header-placeholder"></div>
+
+    <div class="container content-section">
+        <h1 class="mb-4">Add New Program Course</h1>
+        <p class="lead">Fill in the details below to add a new course to a program.</p>
+
+        <div class="form-card">
+            <form>
+                <div class="mb-3">
+                    <label for="courseCategory" class="form-label">Course Category:</label>
+                    <select class="form-select" id="courseCategory" required>
+                        <option value="" selected disabled>Select Category...</option>
+                        <option value="General Education - Core Courses (GEC)">General Education - Core Courses (GEC)</option>
+                        <option value="General Education - Mandated Course, Rizal (GEC)">General Education - Mandated Course, Rizal (GEC)</option>
+                        <option value="General Education - Elective Courses (GEE)">General Education - Elective Courses (GEE)</option>
+                        <option value="Common Courses (CC)">Common Courses (CC)</option>
+                        <option value="Professional Courses (PC)">Professional Courses (PC)</option>
+                        <option value="On-the-Job Training (PC)">On-the-Job Training (PC)</option>
+                        <option value="Professional Electives (P Elec)">Professional Electives (P Elec)</option>
+                        <option value="Professional/Domain Courses (AP)">Professional/Domain Courses (AP)</option>
+                        <option value="Physical Education (PE)">Physical Education (PE)</option>
+                        <option value="National Service Training Program (NSTP)">National Service Training Program (NSTP)</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="courseCode" class="form-label">Course Code:</label>
+                    <input type="text" class="form-control" id="courseCode" placeholder="e.g., IT101" required>
+                </div>
+                <div class="mb-3">
+                    <label for="descriptiveTitle" class="form-label">Descriptive Title:</label>
+                    <input type="text" class="form-control" id="descriptiveTitle" placeholder="e.g., Introduction to Computing" required>
+                </div>
+                <div class="mb-3">
+                    <label for="prerequisite" class="form-label">Co-/Prerequisite:</label>
+                    <select class="form-select" id="prerequisite">
+                        <option value="None" selected>None</option>
+                        <option value="IT101">IT101 - Introduction to Computing</option>
+                        <option value="CS102">CS102 - Object-Oriented Programming</option>
+                        <option value="ACCTG101">ACCTG101 - Fundamentals of Accounting</option>
+                        </select>
+                </div>
+                <div class="mb-3">
+                    <label for="numberOfUnits" class="form-label">No. of Units:</label>
+                    <input type="number" class="form-control" id="numberOfUnits" min="1" max="6" value="3" required>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="lecUnits" class="form-label">Lecture Units:</label>
+                        <input type="number" class="form-control" id="lecUnits" min="0" value="2" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="labUnits" class="form-label">Laboratory Units:</label>
+                        <input type="number" class="form-control" id="labUnits" min="0" value="1" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Course</button>
+                <button type="button" class="btn btn-secondary ms-2" onclick="history.back()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../Content/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Header Loading Logic (unchanged from ManagePrograms.html) ---
+            const headerPath = '../Shared/AdminHeader.html'; // Path relative to Views/Admin/
+            fetch(headerPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('admin-header-placeholder').innerHTML = html;
+
+                    const currentPath = window.location.pathname;
+                    const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+                    const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link');
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);
+
+                        if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
+                            link.classList.add('active');
+                            link.setAttribute('aria-current', 'page');
+                        } else {
+                            link.classList.remove('active');
+                            link.removeAttribute('aria-current');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading Admin header:', error);
+                    document.getElementById('admin-header-placeholder').innerHTML = '<p style="color: red; text-align: center;">Failed to load navigation.</p>';
+                });
+
+            // You can add JavaScript here to handle form submission (e.g., sending data to a server)
+            document.querySelector('form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const courseCategory = document.getElementById('courseCategory').value;
+                const courseCode = document.getElementById('courseCode').value;
+                const descriptiveTitle = document.getElementById('descriptiveTitle').value;
+                const prerequisite = document.getElementById('prerequisite').value;
+                const numberOfUnits = document.getElementById('numberOfUnits').value;
+                const lecUnits = document.getElementById('lecUnits').value;
+                const labUnits = document.getElementById('labUnits').value;
+
+                console.log({
+                    courseCategory,
+                    courseCode,
+                    descriptiveTitle,
+                    prerequisite,
+                    numberOfUnits,
+                    lecUnits,
+                    labUnits
+                });
+
+                alert('Course Added (frontend simulation)! Check console for data.');
+                // In a real application, you would send this data to a backend server.
+                // After successful submission, you might redirect back to ManagePrograms.html
+                // window.location.href = 'ManagePrograms.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,33 +1,241 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@{
+    Layout = null; // Or specify a layout if applicable: "~/Views/Shared/_Layout.cshtml"
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cebu Technological University | Student Enrollment System</title>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/bootstrap.min.css")" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --button-blue: #007bff;
+            --button-blue-hover: #0056b3;
+            --button-purple: #6f42c5;
+            --button-purple-hover: #5b36a8;
+            --light-grey: #f8f9fa;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            background-color: var(--light-grey);
+            overflow: hidden;
+        }
+
+        .content-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: #ffffff;
+            box-shadow: 20px 0 50px -15px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-50px);
+            text-align: left;
+        }
+
+        .content-wrapper {
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .content-section h1 {
+            font-size: 3rem;
+            color: var(--button-blue-hover);
+            margin-bottom: 5px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .system-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .content-section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+
+        .btn-group-main {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .btn-custom {
+            font-size: 1rem;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 0.8px;
+            min-width: 160px;
+            color: white;
+            border: none;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-login-custom {
+            background-color: var(--button-blue);
+        }
+        .btn-login-custom:hover {
+            background-color: var(--button-blue-hover);
+        }
+
+        .btn-signup-custom {
+            background-color: var(--button-purple);
+        }
+        .btn-signup-custom:hover {
+            background-color: var(--button-purple-hover);
+        }
+
+        .image-section {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            position: relative;
+            animation: slideInRight 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        @@keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @@keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @@keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @@media (max-width: 992px) {
+            body {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .content-section {
+                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+                padding: 50px 30px;
+                animation: fadeInScale 0.9s ease-out forwards;
+                transform: translateY(20px);
+                text-align: center;
+            }
+            .image-section {
+                min-height: 350px;
+                width: 100%;
+                animation: fadeInScale 0.9s ease-out forwards;
+                transform: translateY(20px);
+            }
+            .content-section h1 {
+                font-size: 2.5rem;
+                margin-bottom: 5px;
+            }
+            .system-subtitle {
+                font-size: 1.3rem;
+                margin-bottom: 20px;
+            }
+            .btn-group-main {
+                justify-content: center;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .content-section {
+                padding: 30px 15px;
+            }
+            .content-section h1 {
+                font-size: 1.8rem;
+            }
+            .system-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            .content-section p {
+                font-size: 0.9rem;
+            }
+            .btn-group-main {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-custom {
+                width: 100%;
+                padding: 10px 20px;
+            }
+            .image-section {
+                min-height: 250px;
+            }
+        }
+
+        body:not(.js-loaded) .content-section,
+        body:not(.js-loaded) .image-section {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+
+</head>
+<body>
+<div class="content-section">
+    <div class="content-wrapper">
+        <h1>Cebu Technological University</h1>
+        <p class="system-subtitle">Student Enrollment System</p>
+        <p>Welcome to the CTU Enrollment System, designed to empower aspiring minds. Explore our leading-edge degree programs, seamlessly manage your application, and step into a future of innovation, research, and community-responsive education.</p>
+        <div class="btn-group-main">
+            <a href="@Url.Action("Login", "Login")" aria-label="Login to CTU Student Portal">
+                <button class="btn btn-custom btn-login-custom">Login to Portal</button>
+            </a>
+            <a asp-controller="Student" asp-action="SignUp" aria-label="Apply now for CTU Enrollment">
+                <button class="btn btn-custom btn-signup-custom">Apply Now</button>
+            </a>
+        </div>
+
     </div>
-</main>
+</div>
+
+<div class="image-section" style="background-image: url('@Url.Content("~/images/image_6dbc1d.png")');">
+</div>
+
+<script src="@Url.Content("~/Content/bootstrap.bundle.min.js")"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('js-loaded');
+    });
+</script>
+</body>
+</html>

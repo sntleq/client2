@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Auth\LoginController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -151,6 +152,8 @@
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap.min.css-x" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -163,6 +166,30 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Admin\AddProgram.html" />
+    <Content Include="Views\Admin\Dashboard.html" />
+    <Content Include="Views\Admin\EditProgram.html" />
+    <Content Include="Views\Admin\Program.html" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\LoginAdmin.cshtml" />
+    <Content Include="Views\Auth\LoginProgramHead.cshtml" />
+    <Content Include="Views\Auth\LoginTeacher.cshtml" />
+    <Content Include="Views\Auth\SignUp.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Main\ClassSchedule.html" />
+    <Content Include="Views\Main\Enroll\EnrollmentForm.html" />
+    <Content Include="Views\Main\Home.html" />
+    <Content Include="Views\Main\StudentEnroll.html" />
+    <Content Include="Views\Main\StudentProfile.html" />
+    <Content Include="Views\Main\ViewGrades.html" />
+    <Content Include="Views\Program-Head\Dashboard.html" />
+    <Content Include="Views\Program-Head\EnrollmentApproval.html" />
+    <Content Include="Views\Program-Head\SetSchedules.html" />
+    <Content Include="Views\Program-Head\StaffManagement.html" />
+    <Content Include="Views\Shared\AdminHeader.html" />
+    <Content Include="Views\Shared\MainHeader.html" />
+    <Content Include="Views\Shared\ProgramHeadHeader.html" />
+    <Content Include="Views\Shared\TeacherHeader.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -176,10 +203,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Indexorig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Admin\" />
+    <Folder Include="Controllers\Main\" />
+    <Folder Include="Controllers\Program-Head\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

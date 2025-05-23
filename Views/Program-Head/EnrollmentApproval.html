@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Approval - Program Head</title>
+    <link rel="stylesheet" href="../../Content/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-section {
+            padding: 30px;
+            flex-grow: 1;
+            margin-top: 56px; /* Adjust based on header height to prevent overlap */
+        }
+        .card-custom {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .action-buttons button {
+            margin-right: 5px; /* Spacing between action buttons */
+        }
+    </style>
+</head>
+<body>
+    <div id="programhead-header-placeholder"></div>
+
+    <div class="container content-section">
+        <h1 class="mb-4">Enrollment Approval</h1>
+        <p class="lead">Review and manage pending student enrollment applications for your program.</p>
+
+        <div class="card-custom">
+            <h3 class="mb-3">Pending Approvals</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Year and Semester</th>
+                            <th>Student Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enrollmentApprovalsTableBody">
+                        <tr>
+                            <td>6713621</td>
+                            <td>Edmark Talingting</td>
+                            <td>BSIT</td>
+                            <td>3rd Year - 1st Semester</td>
+                            <td>Regular</td>
+                            <td>2025-05-22</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-sm btn-info">View More</button>
+                                <button class="btn btn-sm btn-success">Approve</button>
+                                <button class="btn btn-sm btn-danger">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2023-002</td>
+                            <td>Maria Clara</td>
+                            <td>BSCS</td>
+                            <td>2nd Year - 2nd Semester</td>
+                            <td>Irregular</td>
+                            <td>2024-05-14</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-sm btn-info">View More</button>
+                                <button class="btn btn-sm btn-success">Approve</button>
+                                <button class="btn btn-sm btn-danger">Reject</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+            <div class="text-end mt-3">
+                <button class="btn btn-info">Refresh List</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../Content/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const headerPath = '../Shared/ProgramHeadHeader.html'; // Path relative to Views/Program-Head/
+
+            fetch(headerPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('programhead-header-placeholder').innerHTML = html;
+
+                    // Highlight active link in header
+                    const currentPath = window.location.pathname;
+                    const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+                    const navLinks = document.querySelectorAll('#navbarNavProgramHead .nav-link');
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);
+
+                        if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
+                            link.classList.add('active');
+                            link.setAttribute('aria-current', 'page');
+                        } else {
+                            link.classList.remove('active');
+                            link.removeAttribute('aria-current');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading Program Head header:', error);
+                    document.getElementById('programhead-header-placeholder').innerHTML = '<p style="color: red; text-align: center;">Failed to load navigation.</p>';
+                });
+
+            // Add JavaScript for Approve/Reject actions here
+            document.getElementById('enrollmentApprovalsTableBody').addEventListener('click', function(event) {
+                if (event.target.classList.contains('btn-success')) {
+                    alert('Approval functionality here!');
+                    // In a real app, send data to backend, update table
+                } else if (event.target.classList.contains('btn-danger')) {
+                    alert('Rejection functionality here!');
+                    // In a real app, send data to backend, update table
+                } else if (event.target.classList.contains('btn-info')) {
+                    alert('View More functionality here!');
+                    // In a real app, redirect to a detailed student view or open a modal
+                }
+            });
+        });
+    </script>
+</body>
+</html>

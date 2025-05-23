@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Enrollment System</title>
+    <link rel="stylesheet" href="../../Content/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Assuming Inter font is desired */
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-section {
+            padding: 30px;
+            flex-grow: 1;
+            margin-top: 56px; /* Adjust based on header height to prevent overlap */
+        }
+        /* Styling for the new metric cards */
+        .metric-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly more prominent shadow */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .metric-card h3 {
+            font-size: 1.2rem;
+            color: #6c757d; /* Muted color for title */
+            margin-bottom: 10px;
+        }
+        .metric-card .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #007bff; /* Primary color for the count */
+        }
+    </style>
+</head>
+<body>
+    <div id="admin-header-placeholder"></div>
+
+    <div class="container content-section">
+        <h1 class="mb-4">Admin Dashboard</h1>
+        <p class="lead">Welcome, Admin! Here you can find an overview of key system metrics.</p>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Admins</h3>
+                    <div class="count">1</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Program Heads</h3>
+                    <div class="count">5</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Teachers</h3>
+                    <div class="count">50</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Students</h3>
+                    <div class="count">500</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Courses</h3>
+                    <div class="count">10</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="metric-card">
+                    <h3>Total Subjects</h3>
+                    <div class="count">120</div>
+                </div>
+            </div>
+            </div>
+    </div>
+
+    <script src="../../Content/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load AdminHeader.html
+            const headerPath = '../Shared/AdminHeader.html'; // Path relative to Views/Admin/
+            fetch(headerPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('admin-header-placeholder').innerHTML = html;
+
+                    // Highlight active link after header is loaded
+                    const currentPath = window.location.pathname;
+                    const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+                    const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link'); // Use #navbarNavAdmin for this specific header
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);
+
+                        if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
+                            link.classList.add('active');
+                            link.setAttribute('aria-current', 'page');
+                        } else {
+                            link.classList.remove('active');
+                            link.removeAttribute('aria-current');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading Admin header:', error);
+                    document.getElementById('admin-header-placeholder').innerHTML = '<p style="color: red; text-align: center;">Failed to load navigation.</p>';
+                });
+        });
+    </script>
+</body>
+</html>

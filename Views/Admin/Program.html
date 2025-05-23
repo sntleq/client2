@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Programs - Enrollment System</title>
+    <link rel="stylesheet" href="../../Content/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-section {
+            padding: 30px;
+            flex-grow: 1;
+            margin-top: 56px; /* Adjust based on header height to prevent overlap */
+        }
+        .program-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        #programDetailsTable {
+            display: none; /* Hidden by default, will be shown when filters are applied */
+        }
+        /* Style for action buttons */
+        .action-buttons button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="admin-header-placeholder"></div>
+
+    <div class="container content-section">
+        <h1 class="mb-4">Manage Programs</h1>
+        <p class="lead">Add, edit, or remove academic programs offered by the institution and view their course offerings by year and semester.</p>
+
+        <div class="program-card">
+            <h3 class="mb-3">Program Details</h3>
+
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label for="programSelect" class="form-label">Select Program:</label>
+                    <select class="form-select" id="programSelect">
+                        <option value="" selected disabled>Choose Program...</option>
+                        <option value="BSIT">Bachelor of Science in Information Technology</option>
+                        <option value="BSCS">Bachelor of Science in Computer Science</option>
+                        <option value="BSA">Bachelor of Science in Accountancy</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="yearSemesterSelect" class="form-label">Select Year and Semester:</label>
+                    <select class="form-select" id="yearSemesterSelect" disabled>
+                        <option value="" selected disabled>Choose Year & Semester...</option>
+                        <option value="1st Year - 1st Semester">1st Year - 1st Semester</option>
+                        <option value="1st Year - 2nd Semester">1st Year - 2nd Semester</option>
+                        <option value="1st Year - Summer">1st Year - Summer</option>
+                        <option value="2nd Year - 1st Semester">2nd Year - 1st Semester</option>
+                        <option value="2nd Year - 2nd Semester">2nd Year - 2nd Semester</option>
+                        <option value="2nd Year - Summer">2nd Year - Summer</option>
+                        <option value="3rd Year - 1st Semester">3rd Year - 1st Semester</option>
+                        <option value="3rd Year - 2nd Semester">3rd Year - 2nd Semester</option>
+                        <option value="3rd Year - Summer">3rd Year - Summer</option>
+                        <option value="4th Year - 1st Semester">4th Year - 1st Semester</option>
+                        <option value="4th Year - 2nd Semester">4th Year - 2nd Semester</option>
+                        <option value="4th Year - Summer">4th Year - Summer</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="programDetailsTable" class="mt-4">
+                <h4 id="selectedProgramTitle"></h4>
+                <div class="table-responsive"> <table class="table table-bordered table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Descriptive Title</th>
+                                <th>Co-/Prerequisite</th>
+                                <th>Units</th>
+                                <th>Lec</th>
+                                <th>Lab</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="programTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button class="btn btn-success mt-3" onclick="location.href='AddProgram.html'">Add New Course</button>
+            <button class="btn btn-primary mt-3 ms-2" id="clearFiltersBtn" style="display:none;">Clear Filters</button>
+        </div>
+    </div>
+
+    <script src="../../Content/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Header Loading Logic (unchanged) ---
+            const headerPath = '../Shared/AdminHeader.html'; // Path relative to Views/Admin/
+            fetch(headerPath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('admin-header-placeholder').innerHTML = html;
+
+                    const currentPath = window.location.pathname;
+                    const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+                    const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link');
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);
+
+                        if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
+                            link.classList.add('active');
+                            link.setAttribute('aria-current', 'page');
+                        } else {
+                            link.classList.remove('active');
+                            link.removeAttribute('aria-current');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading Admin header:', error);
+                    document.getElementById('admin-header-placeholder').innerHTML = '<p style="color: red; text-align: center;">Failed to load navigation.</p>';
+                });
+
+            // --- Program Details Logic ---
+            const programSelect = document.getElementById('programSelect');
+            const yearSemesterSelect = document.getElementById('yearSemesterSelect');
+            const programDetailsTable = document.getElementById('programDetailsTable');
+            const selectedProgramTitle = document.getElementById('selectedProgramTitle');
+            const programTableBody = document.getElementById('programTableBody');
+            const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+            // Dummy data for programs with comprehensive course details including new fields
+            const programData = {
+                "BSIT": [
+                    { code: "IT101", title: "Introduction to Computing", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
+                    { code: "IT102", title: "Programming Logic and Design", prerequisite: "None", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "1st Semester" },
+                    { code: "GE101", title: "Understanding the Self", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
+                    { code: "IT103", title: "Web Development Fundamentals", prerequisite: "IT102", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "2nd Semester" },
+                    { code: "NET101", title: "Networking Essentials", prerequisite: "None", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "2nd Semester" },
+                    { code: "DATA201", title: "Database Management Systems", prerequisite: "IT102", units: 3, lec: 2, lab: 1, year: "2nd Year", semester: "1st Semester" },
+                    { code: "WEB202", title: "Advanced Web Development", prerequisite: "IT103", units: 3, lec: 2, lab: 1, year: "2nd Year", semester: "2nd Semester" },
+                    { code: "CAPSTONE", title: "Capstone Project", prerequisite: "All Major Subjects", units: 3, lec: 1, lab: 2, year: "4th Year", semester: "1st Semester" }
+                ],
+                "BSCS": [
+                    { code: "CS101", title: "Discrete Structures", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
+                    { code: "CS102", title: "Object-Oriented Programming", prerequisite: "CS101", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "2nd Semester" },
+                    { code: "ALGO201", title: "Analysis of Algorithms", prerequisite: "CS102", units: 3, lec: 3, lab: 0, year: "2nd Year", semester: "1st Semester" },
+                    { code: "AI301", title: "Artificial Intelligence", prerequisite: "ALGO201", units: 3, lec: 2, lab: 1, year: "3rd Year", semester: "1st Semester" }
+                ],
+                "BSA": [
+                    { code: "ACCTG101", title: "Fundamentals of Accounting", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
+                    { code: "ACCTG102", title: "Partnership and Corporation", prerequisite: "ACCTG101", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "2nd Semester" },
+                    { code: "AUDIT201", title: "Auditing Theory", prerequisite: "ACCTG102", units: 3, lec: 3, lab: 0, year: "2nd Year", semester: "1st Semester" }
+                ]
+            };
+
+            function updateProgramCourses() {
+                const selectedProgramValue = programSelect.value;
+                const selectedYearSemesterValue = yearSemesterSelect.value;
+
+                programTableBody.innerHTML = ''; // Clear previous table data
+                programDetailsTable.style.display = 'none'; // Hide table by default
+
+                if (!selectedProgramValue || !selectedYearSemesterValue) {
+                    selectedProgramTitle.textContent = 'Please select a Program and a Year & Semester.';
+                    clearFiltersBtn.style.display = 'none'; // Hide clear button
+                    return;
+                }
+
+                // Parse the combined year and semester string
+                const [selectedYear, selectedSemester] = selectedYearSemesterValue.split(' - ');
+                const programName = programSelect.options[programSelect.selectedIndex].text;
+                selectedProgramTitle.textContent = `${programName} - ${selectedYearSemesterValue} Courses`;
+
+                const filteredCourses = programData[selectedProgramValue].filter(course =>
+                    course.year === selectedYear && course.semester === selectedSemester
+                );
+
+                if (filteredCourses.length > 0) {
+                    filteredCourses.forEach(course => {
+                        const row = programTableBody.insertRow();
+                        row.insertCell().textContent = course.code;
+                        row.insertCell().textContent = course.title;
+                        row.insertCell().textContent = course.prerequisite; // New column
+                        row.insertCell().textContent = course.units;
+                        row.insertCell().textContent = course.lec;          // New column
+                        row.insertCell().textContent = course.lab;          // New column
+                        row.insertCell().textContent = course.lec + course.lab; // Calculated Total
+
+                        // Actions column with buttons
+                        const actionsCell = row.insertCell();
+                        actionsCell.classList.add('action-buttons'); // Add class for styling
+
+                        // Edit button - Navigates to EditProgram.html with courseCode
+                        const editButton = document.createElement('button');
+                        editButton.classList.add('btn', 'btn-sm', 'btn-info');
+                        editButton.textContent = 'Edit';
+                        editButton.onclick = () => {
+                            location.href = `EditProgram.html?courseCode=${course.code}`;
+                        };
+                        actionsCell.appendChild(editButton);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = () => {
+                            if (confirm(`Are you sure you want to delete ${course.code} - ${course.title}?`)) {
+                                alert(`${course.code} deleted! (frontend only for now)`); // Example action
+                                // In a real app, you'd send a request to the server and then re-render the table
+                            }
+                        };
+                        actionsCell.appendChild(deleteButton);
+                    });
+                    programDetailsTable.style.display = 'block'; // Show the table
+                    clearFiltersBtn.style.display = 'inline-block'; // Show clear button
+                } else {
+                    selectedProgramTitle.textContent = `No courses found for ${programName} - ${selectedYearSemesterValue}`;
+                    clearFiltersBtn.style.display = 'inline-block'; // Show clear button even if no courses for the selected filters
+                }
+            }
+
+            function resetYearSemesterSelect() {
+                yearSemesterSelect.value = "";
+                yearSemesterSelect.disabled = true;
+                programDetailsTable.style.display = 'none';
+                programTableBody.innerHTML = '';
+                selectedProgramTitle.textContent = '';
+                clearFiltersBtn.style.display = 'none';
+            }
+
+            // Event Listeners for dropdowns
+            programSelect.addEventListener('change', function() {
+                if (this.value) {
+                    yearSemesterSelect.disabled = false;
+                    yearSemesterSelect.value = ""; // Reset combined select when program changes
+                } else {
+                    resetYearSemesterSelect();
+                }
+                updateProgramCourses(); // Attempt to update even if not all selected to show initial message
+            });
+
+            yearSemesterSelect.addEventListener('change', updateProgramCourses);
+
+            clearFiltersBtn.addEventListener('click', function() {
+                programSelect.value = "";
+                resetYearSemesterSelect();
+                updateProgramCourses(); // Clear any messages
+            });
+
+            // Initial state: ensure combined select is disabled and table is hidden
+            resetYearSemesterSelect();
+        });
+    </script>
+</body>
+</html>

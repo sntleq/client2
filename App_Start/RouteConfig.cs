@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Fresh_University_Enrollment
@@ -11,6 +7,60 @@ namespace Fresh_University_Enrollment
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+                        
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "SignUpRoute",
+                url: "SignUp",
+                defaults: new { controller = "Login", action = "SignUp" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "LoginAdminRoute",
+                url: "Login/Admin",
+                defaults: new { controller = "Login", action = "LoginAdmin" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "LoginHeadRoute",
+                url: "Login/Head",
+                defaults: new { controller = "Login", action = "LoginHead" }
+            );
+
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "LoginTeacherRoute",
+                url: "Login/Teacher",
+                defaults: new { controller = "Login", action = "LoginTeacher" }
+            );
+            
+            
+            
+            
+            //LOGIN
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "LoginRoute",
+                url: "Login/Student",
+                defaults: new { controller = "Login", action = "Login" }
+            );
+            
+            
+            
+            
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
