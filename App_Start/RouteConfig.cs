@@ -37,10 +37,6 @@ namespace Fresh_University_Enrollment
                 url: "Home/Enrollment",
                 defaults: new { controller = "Main", action = "Student_Enrollment" }
             );
-
-            
-            
-            
             
             
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
@@ -51,9 +47,6 @@ namespace Fresh_University_Enrollment
                 url: "Home/Profile",
                 defaults: new { controller = "Main", action = "Student_Profile" }
             );
-            
-            
-            
             
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         
@@ -102,8 +95,6 @@ namespace Fresh_University_Enrollment
             );
             
             
-            
-            
             //LOGIN
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         
@@ -113,7 +104,6 @@ namespace Fresh_University_Enrollment
                 url: "Login/Student",
                 defaults: new { controller = "Login", action = "Login" }
             );
-            
             
             
             
