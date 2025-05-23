@@ -1,6 +1,5 @@
 @{
-Layout = null; // Or set your layout path if you have one
-// You can add model declarations here if needed
+    Layout = "~/Views/Shared/_AdminHeader.cshtml"; // Make sure this layout includes @RenderSection("Scripts", required: false)
 }
 
 <!DOCTYPE html>
@@ -9,10 +8,10 @@ Layout = null; // Or set your layout path if you have one
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Enrollment System</title>
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif; /* Assuming Inter font is desired */
             background-color: #f0f2f5;
             min-height: 100vh;
             display: flex;
@@ -28,24 +27,25 @@ Layout = null; // Or set your layout path if you have one
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly more prominent shadow */
             margin-bottom: 20px;
             text-align: center;
         }
         .metric-card h3 {
             font-size: 1.2rem;
-            color: #6c757d;
+            color: #6c757d; /* Muted color for title */
             margin-bottom: 10px;
         }
         .metric-card .count {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #007bff;
+            color: #007bff; /* Primary color for the count */
         }
     </style>
 </head>
 <body>
-@Html.Partial("_AdminHeader") <!-- Using partial view for header -->
+<div id="admin-header-placeholder">
+</div>
 
 <div class="container content-section">
     <h1 class="mb-4">Admin Dashboard</h1>
@@ -55,7 +55,7 @@ Layout = null; // Or set your layout path if you have one
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Admins</h3>
-                <div class="count">@ViewBag.TotalAdmins</div> <!-- Dynamic data -->
+                <div class="count">@ViewBag.TotalAdmins</div> <!-- Example of using dynamic data -->
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">
@@ -91,14 +91,13 @@ Layout = null; // Or set your layout path if you have one
     </div>
 </div>
 
-<script src="~/Content/bootstrap.bundle.min.js"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Highlight active link
+        // Highlight active link after header is loaded
         const currentPath = window.location.pathname;
         const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-        const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link');
-
+        const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link'); // Use #navbarNavAdmin for this specific header
         navLinks.forEach(link => {
             const linkHref = link.getAttribute('href');
             const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);

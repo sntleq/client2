@@ -1,43 +1,11 @@
 @{
-Layout = null; // Or set your layout if you have one
+ViewData["Title"] = "Edit Program Course";
+Layout = "~/Views/Shared/_AdminLayout.cshtml"; // Assuming you have a shared layout
 }
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Program Course</title>
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .content-section {
-            padding: 30px;
-            flex-grow: 1;
-            margin-top: 56px; /* Adjust based on header height to prevent overlap */
-        }
-        .form-card {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-@Html.Partial("~/Views/Shared/AdminHeader.cshtml")
 
 <div class="container content-section">
     <h1 class="mb-4">Edit Program Course</h1>
     <p class="lead">Modify the details of the selected course.</p>
-
     <div class="form-card">
         <form id="editCourseForm">
             <div class="mb-3">
@@ -94,11 +62,9 @@ Layout = null; // Or set your layout if you have one
     </div>
 </div>
 
-<script src="~/Content/bootstrap.bundle.min.js"></script>
+@section Scripts {
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Dummy data for programs with comprehensive course details
-        // In a real application, this would come from the server via model binding
+    document.addEventListener('DOMContentLoaded', function () {
         const programData = {
             "BSIT": [
                 { code: "IT101", title: "Introduction to Computing", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester", category: "Common Courses (CC)" },
@@ -123,9 +89,14 @@ Layout = null; // Or set your layout if you have one
             ]
         };
 
-        // Get the course code from ViewBag or ViewData (server-side)
-        // This replaces the URL parameter approach in the original
-        const courseCodeParam = '@ViewBag.CourseCode'; // Or '@ViewData["CourseCode"]'
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        const courseCodeParam = getUrlParameter('courseCode');
 
         const courseCategorySelect = document.getElementById('courseCategory');
         const courseCodeInput = document.getElementById('courseCode');
@@ -135,15 +106,11 @@ Layout = null; // Or set your layout if you have one
         const lecUnitsInput = document.getElementById('lecUnits');
         const labUnitsInput = document.getElementById('labUnits');
 
-        // Pre-fill form if a course code is provided
         if (courseCodeParam) {
-            // Find the course in the dummy data
             let courseToEdit = null;
             for (const programKey in programData) {
                 courseToEdit = programData[programKey].find(course => course.code === courseCodeParam);
-                if (courseToEdit) {
-                    break; // Found the course
-                }
+                if (courseToEdit) break;
             }
 
             if (courseToEdit) {
@@ -155,46 +122,31 @@ Layout = null; // Or set your layout if you have one
                 lecUnitsInput.value = courseToEdit.lec;
                 labUnitsInput.value = courseToEdit.lab;
 
-                // Ensure the selected prerequisite exists, otherwise default to "None"
                 let prereqExists = Array.from(prerequisiteSelect.options).some(option => option.value === courseToEdit.prerequisite);
                 if (!prereqExists) {
                     prerequisiteSelect.value = "None";
                 }
-
             } else {
                 alert('Course not found for editing.');
-                // Optionally redirect back to manage programs
-                // window.location.href = '@Url.Action("ManagePrograms", "Admin")';
             }
         } else {
             alert('No course code provided for editing.');
-            // Optionally redirect back to manage programs
-            // window.location.href = '@Url.Action("ManagePrograms", "Admin")';
         }
 
-        // Handle form submission for editing
-        document.getElementById('editCourseForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-
+        document.getElementById('editCourseForm').addEventListener('submit', function (event) {
+            event.preventDefault();
             const updatedCourseData = {
                 courseCategory: courseCategorySelect.value,
-                courseCode: courseCodeInput.value, // Readonly, but still included in data
+                courseCode: courseCodeInput.value,
                 descriptiveTitle: descriptiveTitleInput.value,
                 prerequisite: prerequisiteSelect.value,
                 numberOfUnits: numberOfUnitsInput.value,
                 lecUnits: lecUnitsInput.value,
                 labUnits: labUnitsInput.value
             };
-
             console.log('Updated Course Data:', updatedCourseData);
-
             alert(`Course ${updatedCourseData.courseCode} updated (frontend simulation)!`);
-            // In a real application, you would send this updated data to a backend server
-            // via an API call (e.g., PUT or PATCH request).
-            // After successful update, you might redirect back to ManagePrograms:
-            // window.location.href = '@Url.Action("ManagePrograms", "Admin")';
         });
     });
 </script>
-</body>
-</html>
+}

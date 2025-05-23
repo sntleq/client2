@@ -1,0 +1,174 @@
+@{
+    Layout = "~/Views/Shared/_AdminHeader.cshtml"; // Make sure this layout includes @RenderSection("Scripts", required: false)
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Programs - Enrollment System</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-section {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        .course-form {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .units-input {
+            max-width: 80px;
+        }
+
+        .action-buttons .btn {
+            margin-right: 5px;
+        }
+
+        .form-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header Placeholder -->
+<div id="admin-header-placeholder">
+    @{
+        // Render the admin header as a partial view
+    }
+</div>
+
+<!-- Main Content -->
+<div class="container content-section">
+    <h1 class="mb-4">Manage Courses</h1>
+    <p class="lead mb-4">
+        Add, edit, or remove academic programs offered by the institution and view their course offerings by year and semester.
+    </p>
+
+    <!-- Courses List Table -->
+    <div class="course-table mb-5">
+        <h3 class="mb-3">Courses List</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Category</th>
+                    <th>Descriptive Title</th>
+                    <th>Co-/Prerequisite</th>
+                    <th>Units</th>
+                    <th>Lec Hours</th>
+                    <th>Lab Hours</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Static Course Data -->
+                <tr>
+                    <td>IT101</td>
+                    <td>Common Courses (CC)</td>
+                    <td>Introduction to Computing</td>
+                    <td>None</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="action-buttons">
+                        @Html.ActionLink("Edit", "EditCourse", "Admin", new { id = 1 }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Delete", "DeleteCourse", "Admin", new { id = 1 }, new {
+                            @class = "btn btn-sm btn-danger",
+                            onclick = "return confirm('Are you sure you want to delete this course?');"
+                        })
+                    </td>
+                </tr>
+                <tr>
+                    <td>IT102</td>
+                    <td>Professional Courses (PC)</td>
+                    <td>Programming Logic and Design</td>
+                    <td>None</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>1</td>
+                    <td class="action-buttons">
+                        @Html.ActionLink("Edit", "EditCourse", "Admin", new { id = 2 }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Delete", "DeleteCourse", "Admin", new { id = 2 }, new {
+                            @class = "btn btn-sm btn-danger",
+                            onclick = "return confirm('Are you sure you want to delete this course?');"
+                        })
+                    </td>
+                </tr>
+                <tr>
+                    <td>GE101</td>
+                    <td>General Education - Core Courses (GEC)</td>
+                    <td>Understanding the Self</td>
+                    <td>None</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td class="action-buttons">
+                        @Html.ActionLink("Edit", "EditCourse", "Admin", new { id = 3 }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Delete", "DeleteCourse", "Admin", new { id = 3 }, new {
+                            @class = "btn btn-sm btn-danger",
+                            onclick = "return confirm('Are you sure you want to delete this course?');"
+                        })
+                    </td>
+                </tr>
+                <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add New Course Button -->
+        @Html.ActionLink("Add New Course", "AddCourse", "Admin", null, new { @class = "btn btn-success mt-3" })
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
+
+<!-- Inline Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const currentPath = window.location.pathname;
+        const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
+        const navLinks = document.querySelectorAll('#navbarNavAdmin .nav-link');
+
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            const linkPage = linkHref ? linkHref.substring(linkHref.lastIndexOf('/') + 1) : '';
+
+            if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.classList.remove('active');
+                link.removeAttribute('aria-current');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

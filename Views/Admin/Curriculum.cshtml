@@ -1,0 +1,308 @@
+@{
+    ViewData["Title"] = "Manage Curriculum";
+    Layout = "~/Views/Shared/_AdminHeader.cshtml"; // Make sure this layout includes @RenderSection("Scripts", required: false)
+}
+
+<div class="container content-section">
+    <h1 class="mb-4">Manage Curriculum</h1>
+    <p class="lead">Add, edit, or remove academic programs offered by the institution and view their course offerings by year and semester.</p>
+
+    <div class="program-card">
+        <h3 class="mb-3">Program Details</h3>
+        <div class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label for="programSelect" class="form-label">Select Program:</label>
+                <select class="form-select" id="programSelect">
+                    <option value="" selected disabled>Choose Program...</option>
+                    <option value="BSIT">Bachelor of Science in Information Technology</option>
+                    <option value="BSCS">Bachelor of Science in Computer Science</option>
+                    <option value="BSA">Bachelor of Science in Accountancy</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="yearSemesterSelect" class="form-label">Select Year and Semester:</label>
+                <select class="form-select" id="yearSemesterSelect" disabled>
+                    <option value="" selected disabled>Choose Year & Semester...</option>
+                    <option value="1st Year - 1st Semester">1st Year - 1st Semester</option>
+                    <option value="1st Year - 2nd Semester">1st Year - 2nd Semester</option>
+                    <option value="1st Year - Summer">1st Year - Summer</option>
+                    <option value="2nd Year - 1st Semester">2nd Year - 1st Semester</option>
+                    <option value="2nd Year - 2nd Semester">2nd Year - 2nd Semester</option>
+                    <option value="2nd Year - Summer">2nd Year - Summer</option>
+                    <option value="3rd Year - 1st Semester">3rd Year - 1st Semester</option>
+                    <option value="3rd Year - 2nd Semester">3rd Year - 2nd Semester</option>
+                    <option value="3rd Year - Summer">3rd Year - Summer</option>
+                    <option value="4th Year - 1st Semester">4th Year - 1st Semester</option>
+                    <option value="4th Year - 2nd Semester">4th Year - 2nd Semester</option>
+                    <option value="4th Year - Summer">4th Year - Summer</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="programDetailsTable" class="mt-4" style="display:none;">
+            <h4 id="selectedProgramTitle"></h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Descriptive Title</th>
+                        <th>Co-/Prerequisite</th>
+                        <th>Units</th>
+                        <th>Lec</th>
+                        <th>Lab</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="programTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#assignCourseModal">Assign Course</button>
+        <button class="btn btn-primary mt-3 ms-2" id="clearFiltersBtn" style="display:none;">Clear Filters</button>
+    </div>
+</div>
+
+<!-- Assign Course Modal -->
+<div class="modal fade" id="assignCourseModal" tabindex="-1" aria-labelledby="assignCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignCourseModalLabel">Assign Courses to Program</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Current Program:</label>
+                        <p class="fw-bold" id="modalProgramName">-</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Year & Semester:</label>
+                        <p class="fw-bold" id="modalYearSemester">-</p>
+                    </div>
+                </div>
+                <div class="course-search">
+                    <input type="text" class="form-control" id="courseSearch" placeholder="Search courses...">
+                </div>
+                <div class="course-list-container" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th width="50px"></th>
+                            <th>Course Code</th>
+                            <th>Title</th>
+                            <th>Units</th>
+                        </tr>
+                        </thead>
+                        <tbody id="availableCoursesList"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmAssign">Assign Selected Courses</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap 5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const programSelect = document.getElementById('programSelect');
+            const yearSemesterSelect = document.getElementById('yearSemesterSelect');
+            const programDetailsTable = document.getElementById('programDetailsTable');
+            const selectedProgramTitle = document.getElementById('selectedProgramTitle');
+            const programTableBody = document.getElementById('programTableBody');
+            const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+            const assignCourseModal = new bootstrap.Modal(document.getElementById('assignCourseModal'));
+            const modalProgramName = document.getElementById('modalProgramName');
+            const modalYearSemester = document.getElementById('modalYearSemester');
+            const availableCoursesList = document.getElementById('availableCoursesList');
+            const courseSearch = document.getElementById('courseSearch');
+            const confirmAssignBtn = document.getElementById('confirmAssign');
+
+            const programData = {
+                "BSIT": [
+                    { code: "IT101", title: "Introduction to Computing", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
+                    { code: "IT102", title: "Programming Logic and Design", prerequisite: "None", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "1st Semester" }
+                ],
+                "BSCS": [
+                    { code: "CS101", title: "Discrete Structures", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" }
+                ],
+                "BSA": []
+            };
+
+            const allCourses = [
+                { code: "IT101", title: "Introduction to Computing", units: 3 },
+                { code: "IT102", title: "Programming Logic and Design", units: 3 },
+                { code: "GE101", title: "Understanding the Self", units: 3 },
+                { code: "CS101", title: "Discrete Structures", units: 3 }
+            ];
+
+            function updateProgramCourses() {
+                const selectedProgramValue = programSelect.value;
+                const selectedYearSemesterValue = yearSemesterSelect.value;
+
+                programTableBody.innerHTML = '';
+                programDetailsTable.style.display = 'none';
+
+                if (!selectedProgramValue || !selectedYearSemesterValue) {
+                    selectedProgramTitle.textContent = 'Please select a Program and a Year & Semester.';
+                    clearFiltersBtn.style.display = 'none';
+                    return;
+                }
+
+                const [selectedYear, selectedSemester] = selectedYearSemesterValue.split(' - ');
+
+                const filteredCourses = programData[selectedProgramValue].filter(course =>
+                    course.year === selectedYear && course.semester === selectedSemester
+                );
+
+                if (filteredCourses.length > 0) {
+                    filteredCourses.forEach(course => {
+                        const row = programTableBody.insertRow();
+                        row.insertCell().textContent = course.code;
+                        row.insertCell().textContent = course.title;
+                        row.insertCell().textContent = course.prerequisite;
+                        row.insertCell().textContent = course.units;
+                        row.insertCell().textContent = course.lec;
+                        row.insertCell().textContent = course.lab;
+                        row.insertCell().textContent = course.lec + course.lab;
+
+                        const actionsCell = row.insertCell();
+                        const editButton = document.createElement('button');
+                        editButton.className = 'btn btn-sm btn-info me-1';
+                        editButton.textContent = 'Edit';
+                        editButton.onclick = () => {
+                            window.location.href = '@Url.Action("EditProgram", "Admin")?courseCode=' + course.code;
+                        };
+                        actionsCell.appendChild(editButton);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.className = 'btn btn-sm btn-danger';
+                        deleteButton.textContent = 'Delete';
+                        deleteButton.onclick = () => {
+                            if (confirm(`Are you sure you want to delete ${course.code} - ${course.title}?`)) {
+                                alert(`${course.code} deleted! (frontend only for now)`);
+                            }
+                        };
+                        actionsCell.appendChild(deleteButton);
+                    });
+
+                    selectedProgramTitle.textContent = `${programSelect.options[programSelect.selectedIndex].text} - ${selectedYearSemesterValue} Courses`;
+                    programDetailsTable.style.display = 'block';
+                    clearFiltersBtn.style.display = 'inline-block';
+                } else {
+                    selectedProgramTitle.textContent = `No courses found for ${programSelect.options[programSelect.selectedIndex].text} - ${selectedYearSemesterValue}`;
+                    clearFiltersBtn.style.display = 'inline-block';
+                }
+            }
+
+            function resetYearSemesterSelect() {
+                yearSemesterSelect.value = "";
+                yearSemesterSelect.disabled = true;
+                programDetailsTable.style.display = 'none';
+                programTableBody.innerHTML = '';
+                selectedProgramTitle.textContent = '';
+                clearFiltersBtn.style.display = 'none';
+            }
+
+            function populateAvailableCourses() {
+                availableCoursesList.innerHTML = '';
+                const searchTerm = courseSearch.value.toLowerCase();
+                const selectedProgram = programSelect.value;
+                const [selectedYear, selectedSemester] = yearSemesterSelect.value.split(' - ');
+
+                const assignedCourses = programData[selectedProgram]?.filter(c => c.year === selectedYear && c.semester === selectedSemester).map(c => c.code) || [];
+
+                allCourses.filter(c =>
+                    c.code.toLowerCase().includes(searchTerm) ||
+                    c.title.toLowerCase().includes(searchTerm)
+                ).forEach(course => {
+                    const isAssigned = assignedCourses.includes(course.code);
+                    const tr = document.createElement('tr');
+                    tr.className = 'course-item';
+                    if (isAssigned) tr.classList.add('table-secondary');
+                    tr.innerHTML = `
+                        <td><input type="checkbox" class="course-checkbox" ${isAssigned ? 'disabled' : ''} data-code="${course.code}"></td>
+                        <td>${course.code}</td>
+                        <td>${course.title}</td>
+                        <td>${course.units}</td>`;
+                    availableCoursesList.appendChild(tr);
+                });
+            }
+
+            programSelect.addEventListener('change', function () {
+                if (this.value) {
+                    yearSemesterSelect.disabled = false;
+                } else {
+                    resetYearSemesterSelect();
+                }
+                updateProgramCourses();
+            });
+
+            yearSemesterSelect.addEventListener('change', updateProgramCourses);
+            clearFiltersBtn.addEventListener('click', function () {
+                programSelect.value = "";
+                resetYearSemesterSelect();
+                updateProgramCourses();
+            });
+
+            document.querySelector('[data-bs-target="#assignCourseModal"]').addEventListener('click', function () {
+                if (!programSelect.value || !yearSemesterSelect.value) {
+                    alert('Please select a Program and Year/Semester first');
+                    return false;
+                }
+                modalProgramName.textContent = programSelect.options[programSelect.selectedIndex].text;
+                modalYearSemester.textContent = yearSemesterSelect.value;
+                populateAvailableCourses();
+                assignCourseModal.show();
+            });
+
+            courseSearch.addEventListener('input', populateAvailableCourses);
+
+            confirmAssignBtn.addEventListener('click', function () {
+                const selectedProgram = programSelect.value;
+                const [selectedYear, selectedSemester] = yearSemesterSelect.value.split(' - ');
+                const selectedCourses = Array.from(document.querySelectorAll('.course-checkbox:checked')).map(cb => cb.dataset.code);
+
+                if (selectedCourses.length === 0) {
+                    alert('Please select at least one course to assign.');
+                    return;
+                }
+
+                if (!programData[selectedProgram]) {
+                    programData[selectedProgram] = [];
+                }
+
+                selectedCourses.forEach(code => {
+                    const course = allCourses.find(c => c.code === code);
+                    if (course) {
+                        programData[selectedProgram].push({
+                            code: course.code,
+                            title: course.title,
+                            prerequisite: "None",
+                            units: course.units,
+                            lec: course.units,
+                            lab: 0,
+                            year: selectedYear,
+                            semester: selectedSemester
+                        });
+                    }
+                });
+
+                alert(`${selectedCourses.length} course(s) assigned successfully!`);
+                assignCourseModal.hide();
+                updateProgramCourses();
+            });
+
+            resetYearSemesterSelect();
+        });
+    </script>
+}

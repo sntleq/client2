@@ -13,6 +13,26 @@ namespace Fresh_University_Enrollment
         
             // Add this specific route before the default route
             routes.MapRoute(
+                name: "AdminCourseRoute",
+                url: "Admin/Course",
+                defaults: new { controller = "Admin", action = "Admin_Course" }
+            );
+
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "AdminCurriculumRoute",
+                url: "Admin/Curriculum",
+                defaults: new { controller = "Admin", action = "Admin_Curriculum" }
+            );
+            
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
                 name: "MainAdminRoute",
                 url: "Admin/Dashboard",
                 defaults: new { controller = "Admin", action = "MainAdmin" }

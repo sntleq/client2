@@ -9,5 +9,13 @@ namespace Fresh_University_Enrollment.Controllers
         {
             return View("~/Views/Admin/Dashboard.cshtml");
         }
+        public ActionResult Admin_Curriculum()
+        {
+            return View("~/Views/Admin/Curriculum.cshtml");
+        }
+        public ActionResult Admin_Course()
+        {
+            return View("~/Views/Admin/Courses.cshtml");
+        }
     }
 }
