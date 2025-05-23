@@ -78,8 +78,8 @@
             @ViewBag.ErrorMessage
         </div>
     }
-
-    <form action="@Url.Action("Login", "Student")" method="post">
+    @* href="@Url.Action("LoginTeacher", "Login")" *@
+    <form action="@Url.Action("MainHome", "Main")" method="post">
         <div class="mb-3">
             <label for="idNumber" class="form-label">ID Number</label>
             <input type="text" class="form-control" id="idNumber" name="IDNumber" placeholder="Enter ID Number" required />

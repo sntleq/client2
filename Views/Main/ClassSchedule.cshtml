@@ -1,10 +1,14 @@
+@{
+    Layout = null; // Or set to your layout file if you have one
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Class Schedule - Enrollment System</title>
-    <link rel="stylesheet" href="../../Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +40,7 @@
     </style>
 </head>
 <body>
-    <div id="main-header-placeholder"></div>
+    @Html.Partial("_MainHeader") <!-- Assuming you have a shared header partial view -->
 
     <div class="container content-section">
         <h1 class="mb-4">Your Class Schedule</h1>
@@ -142,46 +146,9 @@
         </div>
     </div>
 
-    <script src="../../Content/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const headerPath = '../Shared/MainHeader.html';
-
-            fetch(headerPath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    document.getElementById('main-header-placeholder').innerHTML = html;
-
-                    // --- Logic to set active link ---
-                    const currentPath = window.location.pathname;
-                    const currentPage = currentPath.substring(currentPath.lastIndexOf('/') + 1);
-
-                    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-                    navLinks.forEach(link => {
-                        const linkHref = link.getAttribute('href');
-                        const linkPage = linkHref.substring(linkHref.lastIndexOf('/') + 1);
-
-                        if (linkPage.toLowerCase() === currentPage.toLowerCase()) {
-                            link.classList.add('active');
-                            link.setAttribute('aria-current', 'page');
-                        } else {
-                            link.classList.remove('active');
-                            link.removeAttribute('aria-current');
-                        }
-                    });
-                    // --- End of logic to set active link ---
-
-                })
-                .catch(error => {
-                    console.error('Error loading header:', error);
-                    document.getElementById('main-header-placeholder').innerHTML = '<p style="color: red; text-align: center;">Failed to load navigation.</p>';
-                });
-
             // --- Schedule Display Logic ---
             const currentCourseDisplay = document.getElementById('currentCourseDisplay');
             const yearSelect = document.getElementById('yearSelect');

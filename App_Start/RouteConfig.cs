@@ -5,8 +5,64 @@ namespace Fresh_University_Enrollment
 {
     public class RouteConfig
     {
+        
         public static void RegisterRoutes(RouteCollection routes)
         {
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "MainSchedu;eRoute",
+                url: "Home/Schedule",
+                defaults: new { controller = "Main", action = "Student_Schedule" }
+            );
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "MainViewGradeRoute",
+                url: "Home/Grades",
+                defaults: new { controller = "Main", action = "Student_Grade" }
+            );
+            
+            
+            
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "MainEnrollmentRoute",
+                url: "Home/Enrollment",
+                defaults: new { controller = "Main", action = "Student_Enrollment" }
+            );
+
+            
+            
+            
+            
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "MainProfileRoute",
+                url: "Home/Profile",
+                defaults: new { controller = "Main", action = "Student_Profile" }
+            );
+            
+            
+            
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "MainRoute",
+                url: "Home",
+                defaults: new { controller = "Main", action = "MainHome" }
+            );
                         
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         
@@ -65,7 +121,7 @@ namespace Fresh_University_Enrollment
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
+                url: "",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
