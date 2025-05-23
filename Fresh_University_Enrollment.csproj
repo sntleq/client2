@@ -178,7 +178,6 @@
     <Content Include="Views\Auth\SignUp.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Main\ClassSchedule.cshtml" />
-    <Content Include="Views\Main\Enroll\EnrollmentForm.html" />
     <Content Include="Views\Main\Home.cshtml" />
     <Content Include="Views\Main\StudentEnroll.cshtml" />
     <Content Include="Views\Main\StudentProfile.cshtml" />
