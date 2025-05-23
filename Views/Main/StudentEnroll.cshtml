@@ -1,5 +1,5 @@
 @{
-    Layout = null; // Or set your layout path if you have one
+    Layout = null; // Remove this line if you're using a layout page
 }
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enrollment - Enrollment System</title>
-    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-@Html.Partial("_MainHeader") <!-- Assuming you have a partial view for the header -->
+@Html.Partial("_MainHeader") <!-- Replace with your actual header partial view -->
 
 <div class="container content-section">
     <h1 class="mb-4">Student Enrollment</h1>
@@ -49,22 +49,23 @@
     <div class="card mt-4">
         <div class="card-body">
             <h5 class="card-title mb-4">Student Information</h5>
-            <form id="enrollmentForm">
+            @using (Html.BeginForm("Enroll", "Student", FormMethod.Post, new { id = "enrollmentForm" }))
+            {
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="studentId" class="form-label">Student ID</label>
-                        <input type="text" class="form-control" id="studentId" placeholder="Enter Student ID">
+                        <input type="text" class="form-control" id="studentId" name="studentId" placeholder="Enter Student ID">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <label for="schoolYear" class="form-label">School Year</label>
-                        <input type="text" class="form-control" id="schoolYear" placeholder="e.g., 2024-2025">
+                        <input type="text" class="form-control" id="schoolYear" name="schoolYear" placeholder="e.g., 2024-2025">
                     </div>
                     <div class="col-md-3">
                         <label for="enrollmentSemester" class="form-label">Semester</label>
-                        <select class="form-select" id="enrollmentSemester">
+                        <select class="form-select" id="enrollmentSemester" name="enrollmentSemester">
                             <option selected disabled>Choose...</option>
                             <option value="1st Semester">1st Semester</option>
                             <option value="2nd Semester">2nd Semester</option>
@@ -73,7 +74,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="studentStatus" class="form-label">Student Status</label>
-                        <select class="form-select" id="studentStatus">
+                        <select class="form-select" id="studentStatus" name="studentStatus">
                             <option selected disabled>Choose...</option>
                             <option value="Regular">Regular</option>
                             <option value="Irregular">Irregular</option>
@@ -81,7 +82,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="enrollmentStatus" class="form-label">Enrollment Status</label>
-                        <select class="form-select" id="enrollmentStatus">
+                        <select class="form-select" id="enrollmentStatus" name="enrollmentStatus">
                             <option selected disabled>Choose...</option>
                             <option value="New">New</option>
                             <option value="Old">Old</option>
@@ -94,38 +95,38 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name">
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name">
                     </div>
                     <div class="col-md-4">
                         <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name">
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name">
                     </div>
                     <div class="col-md-4">
                         <label for="middleName" class="form-label">Middle Name</label>
-                        <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name">
+                        <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Enter Middle Name">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="homeAddress" class="form-label">Home Address</label>
-                    <input type="text" class="form-control" id="homeAddress" placeholder="Enter Home Address">
+                    <input type="text" class="form-control" id="homeAddress" name="homeAddress" placeholder="Enter Home Address">
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="contactNumber" class="form-label">Contact Number</label>
-                        <input type="tel" class="form-control" id="contactNumber" placeholder="e.g., 09123456789">
+                        <input type="tel" class="form-control" id="contactNumber" name="contactNumber" placeholder="e.g., 09123456789">
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter Email Address">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Address">
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <label for="yearLevel" class="form-label">Year Level</label>
-                        <select class="form-select" id="yearLevel">
+                        <select class="form-select" id="yearLevel" name="yearLevel">
                             <option selected disabled>Choose...</option>
                             <option value="1st Year">1st Year</option>
                             <option value="2nd Year">2nd Year</option>
@@ -135,11 +136,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="major" class="form-label">Major</label>
-                        <input type="text" class="form-control" id="major" placeholder="e.g., Software Dev">
+                        <input type="text" class="form-control" id="major" name="major" placeholder="e.g., Software Dev">
                     </div>
                     <div class="col-md-3">
                         <label for="program" class="form-label">Program</label>
-                        <select class="form-select" id="program">
+                        <select class="form-select" id="program" name="program">
                             <option selected disabled>Choose...</option>
                             <option value="BSIT">BS Information Technology</option>
                             <option value="BSCS">BS Computer Science</option>
@@ -148,7 +149,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="blockSection" class="form-label">Block Section</label>
-                        <input type="text" class="form-control" id="blockSection" placeholder="e.g., IT-A">
+                        <input type="text" class="form-control" id="blockSection" name="blockSection" placeholder="e.g., IT-A">
                     </div>
                 </div>
 
@@ -159,6 +160,7 @@
                 <button type="button" class="btn btn-info mb-3" id="selectSubjectsBtn">SELECT SUBJECTS</button>
 
                 <div id="subjectSelectionArea">
+                    <h5 class="card-title">Available Subjects</h5>
                     <div class="table-responsive mb-3">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -170,7 +172,8 @@
                                 <th>Days</th>
                                 <th>Room</th>
                                 <th>Units</th>
-                                <th>Action</th> </tr>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody id="availableSubjectsTableBody">
                             <tr>
@@ -240,12 +243,12 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-4">CONFIRM ENROLLMENT</button>
-            </form>
+            }
         </div>
     </div>
 </div>
 
-<script src="~/Content/bootstrap.bundle.min.js"></script>
+<script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- Enrollment Page Specific Logic ---
@@ -315,10 +318,30 @@
 
         // Optional: Form submission handler (for preventing default behavior)
         document.getElementById('enrollmentForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            alert('Enrollment Confirmed! (This is a placeholder, actual submission logic would go here)');
-            // Here you would collect all form data and selected subjects
-            // and send it to your backend for processing.
+            // Collect selected subjects data
+            const selectedSubjects = [];
+            const rows = selectedSubjectsTableBody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const cells = row.cells;
+                selectedSubjects.push({
+                    misCode: cells[0].textContent.trim(),
+                    courseCode: cells[1].textContent.trim(),
+                    title: cells[2].textContent.trim(),
+                    time: cells[3].textContent.trim(),
+                    days: cells[4].textContent.trim(),
+                    room: cells[5].textContent.trim(),
+                    units: parseInt(cells[6].textContent.trim())
+                });
+            });
+
+            // Create a hidden input to store the selected subjects
+            const subjectsInput = document.createElement('input');
+            subjectsInput.type = 'hidden';
+            subjectsInput.name = 'selectedSubjects';
+            subjectsInput.value = JSON.stringify(selectedSubjects);
+            this.appendChild(subjectsInput);
+
+            // Form will now submit with all data including selected subjects
         });
     });
 </script>

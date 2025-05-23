@@ -13,6 +13,62 @@ namespace Fresh_University_Enrollment
         
             // Add this specific route before the default route
             routes.MapRoute(
+                name: "ProgramHeadClassManagementRoute",
+                url: "Head/ManageClass",
+                defaults: new { controller = "ProgramHead", action = "ClassManagement" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "ProgramHeadStudentManagementRoute",
+                url: "Head/ManageStudent",
+                defaults: new { controller = "ProgramHead", action = "StudentManagement" }
+            );
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "ProgramHeadSetScheduleListRoute",
+                url: "Head/Schedules",
+                defaults: new { controller = "ProgramHead", action = "Schedule" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "ProgramHeadEnrollmentApprovalListRoute",
+                url: "Head/EnrollmentApproval",
+                defaults: new { controller = "ProgramHead", action = "Approval" }
+            );
+
+            
+                        
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "ProgramHeadViewStudentListRoute",
+                url: "Head/Students",
+                defaults: new { controller = "ProgramHead", action = "Students" }
+            );
+            
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "ProgramHeadDashboardRoute",
+                url: "Head/Dashboard",
+                defaults: new { controller = "ProgramHead", action = "Dashboard" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
                 name: "AdminCourseRoute",
                 url: "Admin/Course",
                 defaults: new { controller = "Admin", action = "Admin_Course" }

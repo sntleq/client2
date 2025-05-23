@@ -70,7 +70,7 @@ Layout = null; // This ensures the view doesn't use a layout page
 
 <div class="login-container">
     <h2 class="text-center mb-4">Program Head Login</h2>
-    @using (Html.BeginForm("LoginProgramHead", "Account", FormMethod.Post))
+    @using (Html.BeginForm("Dashboard", "ProgramHead", FormMethod.Post))
     {
     <div class="mb-3">
         @Html.Label("programHeadId", "Program Head ID", new { @class = "form-label" })
