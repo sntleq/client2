@@ -13,6 +13,15 @@ namespace Fresh_University_Enrollment
         
             // Add this specific route before the default route
             routes.MapRoute(
+                name: "MainAdminRoute",
+                url: "Admin/Dashboard",
+                defaults: new { controller = "Admin", action = "MainAdmin" }
+            );
+            
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+        
+            // Add this specific route before the default route
+            routes.MapRoute(
                 name: "MainSchedu;eRoute",
                 url: "Home/Schedule",
                 defaults: new { controller = "Main", action = "Student_Schedule" }

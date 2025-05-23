@@ -81,7 +81,7 @@
         </div>
     }
 
-    @using (Html.BeginForm("LoginAdmin", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    @using (Html.BeginForm("MainAdmin", "Admin", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
     {
         @Html.AntiForgeryToken()
 
