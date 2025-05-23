@@ -14,6 +14,7 @@ namespace Fresh_University_Enrollment.Controllers
         // POST: /Auth/SignUp/Entry
         [HttpPost]
         [Route("Entry")]
+        [Route("Entry")]
         public ActionResult Entry(Student student)
         {
             try
@@ -86,7 +87,7 @@ namespace Fresh_University_Enrollment.Controllers
                             {
                                 mess = 1,
                                 message = "Student record created successfully.",
-                                redirectUrl = Url.Action("Login", "Auth", new { message = "Student record created successfully." })
+                                redirectUrl = Url.Action("Login", "Login", new { message = "Student record created successfully." })
                             }, JsonRequestBehavior.AllowGet);
                         }
                         else
