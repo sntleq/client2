@@ -19,6 +19,7 @@
             background-color: #f8f9fa;
             padding: 20px 0;
         }
+
         .signup-container {
             background-color: #ffffff;
             padding: 30px;
@@ -27,7 +28,14 @@
             width: 100%;
             max-width: 800px;
         }
+        .input-error {
+            border: 2px solid #e74c3c !important;
+            background-color: #fdecea;
+        }
+
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="signup-container">
@@ -39,11 +47,8 @@
             @ViewBag.ErrorMessage
         </div>
     }
-    
-    @using (Html.BeginForm("SignUp", "Student", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
-    {
-        @Html.AntiForgeryToken()
 
+    <div>
         <div class="row mb-3">
             <div class="col-md-12">
                 @Html.Label("studCode", "Student ID Number:", new { @class = "form-label" })
@@ -54,8 +59,8 @@
             </div>
         </div>
 
-       <div class="row mb-3">
-             <div class="col-md-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
                 @Html.Label("lastName", "Last Name:", new { @class = "form-label" })
                 @Html.TextBox("lastName", null, new { @class = "form-control", placeholder = "Last Name", required = "required" })
                 <div class="invalid-feedback">
@@ -129,12 +134,12 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-        <p class="text-center mt-3">Already have an account? <a href="@Url.Action("Login", "Login")">Login</a></p>
-    }
+        <button id="btn" type="submit" class="btn btn-primary w-100">Sign Up</button>
+        <p class="text-center mt-3">Already have an account? <a href="@Url.Action("Login", "Auth")">Login</a></p>
+    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/Scripts/JQuery/jquery.js"></script>
 <script src="~/Scripts/MyScript/SignUp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
