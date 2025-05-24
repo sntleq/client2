@@ -1,8 +1,7 @@
-@{
-    Layout = null;
-    ViewBag.Title = "Admin Login";
+﻿@{
+Layout = null;
+ViewBag.Title = "Admin Login";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +18,7 @@
             min-height: 100vh;
             background-color: #f8f9fa;
         }
+
         .login-header-nav-wrapper {
             width: 100%;
             background-color: #e9ecef;
@@ -29,25 +29,30 @@
             top: 0;
             left: 0;
         }
+
         .login-header-nav {
             max-width: 400px;
             margin: 0 auto;
             text-align: center;
         }
+
         .login-header-nav a {
             padding: 0 10px;
             text-decoration: none;
             color: #007bff;
             font-weight: 500;
         }
+
         .login-header-nav a.active {
             color: #343a40;
             font-weight: 700;
             cursor: default;
         }
+
         .login-header-nav a:not(.active):hover {
             text-decoration: underline;
         }
+
         .login-container {
             background-color: #ffffff;
             padding: 30px;
@@ -57,72 +62,52 @@
             max-width: 400px;
             margin-top: 80px;
         }
+        .form-control.is-invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="login-header-nav-wrapper">
     <div class="login-header-nav">
-
-        <a href="@Url.Action("Login", "Login")" >Student</a> |
-        @* <a href="@Url.Action("Login", "Login")" *@
-        <a href="@Url.Action("LoginTeacher", "Login")">Teacher</a> |
-        <a href="@Url.Action("LoginHead", "Login")">Program Head</a> |
-        <a class="active">Admin</a>
+        <a href="@Url.Action("LogIn", "Auth")">Student</a> |
+        <a href="@Url.Action("LoginFaculty", "Auth")">Faculty</a>
     </div>
 </div>
 
 <div class="login-container">
-    <h2 class="text-center mb-4">Admin Login</h2>
+    <h2 class="text-center mb-4">Faculty Login</h2>
 
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage as string))
     {
-        <div class="alert alert-danger text-center">
-            @ViewBag.ErrorMessage
-        </div>
+    <div class="alert alert-danger text-center">
+        @ViewBag.ErrorMessage
+    </div>
     }
 
-    @using (Html.BeginForm("MainAdmin", "Admin", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
-    {
-        @Html.AntiForgeryToken()
+    <div>
 
         <div class="mb-3">
-            @Html.Label("adminId", "Admin ID", new { @class = "form-label" })
-            @Html.TextBox("adminId", null, new { @class = "form-control", placeholder = "Enter Admin ID", required = "required" })
-            <div class="invalid-feedback">
-                Please enter your Admin ID
-            </div>
+            @Html.Label("Id", "Username", new { @class = "form-label" })
+            @Html.TextBox("username", null, new { @class = "form-control", @id = "username", placeholder = "Enter Username" })
+            <div hidden id="user-inv" class="invalid-feedback">Please enter your username</div>
         </div>
         <div class="mb-3">
             @Html.Label("password", "Password", new { @class = "form-label" })
-            @Html.Password("password", null, new { @class = "form-control", placeholder = "Enter Password", required = "required" })
-            <div class="invalid-feedback">
-                Please enter your password
-            </div>
+            @Html.Password("password", null, new { @class = "form-control", @id = "password", placeholder = "Enter Password" })
+            <div hidden id="pass-inv"class="invalid-feedback">Please enter your password</div>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-    }
+
+        <button id="btn" type="submit" class="btn btn-primary w-100">Login</button>
+    </div>
 </div>
 
+<script src="~/Scripts/JQuery/jquery.js"></script>
+<script src="~/Scripts/MyScript/LogInFaculty.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Client-side validation
-    (function () {
-        'use strict'
 
-        var forms = document.querySelectorAll('.needs-validation')
-
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
-</script>
 </body>
 </html>

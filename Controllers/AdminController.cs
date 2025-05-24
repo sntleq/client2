@@ -17,5 +17,13 @@ namespace Fresh_University_Enrollment.Controllers
         {
             return View("~/Views/Admin/Courses.cshtml");
         }
+        public ActionResult Admin_AddCourse()
+        {
+            return View("~/Views/Admin/AddProgram.cshtml");
+        }   
+        public ActionResult Admin_EditCourse()
+        {
+            return View("~/Views/Admin/EditProgram.cshtml");
+        }
     }
 }
