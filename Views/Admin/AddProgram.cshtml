@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_AdminHeader.cshtml";
     ViewBag.Title = "Add New Program Course - Enrollment System";
 }
+@RenderSection("Styles", required: false)
 
 @section Styles {
     <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")">
@@ -86,6 +87,7 @@
     </div>
 </div>
 
+@RenderSection("Scripts", required: false)
 @section Scripts {
     <script src="@Url.Content("~/Scripts/jquery-3.6.0.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>

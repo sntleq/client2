@@ -34,7 +34,7 @@
 
         public DateTime Created_At { get; set; }
 
-        public string Stud_Code { get; set; }
+        public int Stud_Code { get; set; }
 
     }
 

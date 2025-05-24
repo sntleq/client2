@@ -177,7 +177,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ProgramHeadController.cs" />
-    <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Controllers\StudentEnrollment.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +231,7 @@
     <Content Include="Scripts\MyScript\LogIn.js" />
     <Content Include="Scripts\MyScript\LogInFaculty.js" />
     <Content Include="Scripts\MyScript\SignUp.js" />
+    <Content Include="Scripts\MyScript\StudentEnroll.js" />
     <Content Include="Views\Admin\AddProgram.cshtml" />
     <Content Include="Views\Admin\Courses.cshtml" />
     <Content Include="Views\Admin\Curriculum.cshtml" />
