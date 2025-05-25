@@ -1,8 +1,10 @@
 $().ready(function () {
     $('#btn').click(function (e) {
         e.preventDefault(); // Prevent form submission if needed
+        var idNumber = parseInt($('#idNumber').val(), 10);
+        
         const student = {
-            Stud_Code: $('#idNumber').val(),
+            Stud_Code: idNumber,
             Stud_Password: $('#password').val()
         };
 
