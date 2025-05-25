@@ -9,6 +9,22 @@ namespace Fresh_University_Enrollment
         
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "TeacherClassesRoute",
+                url: "Teacher/Classes",
+                defaults: new { controller = "Teacher", action = "Classes" }
+            );
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            // Add this specific route before the default route
+            routes.MapRoute(
+                name: "TeacherDashboardRoute",
+                url: "Teacher/Dashboard",
+                defaults: new { controller = "Teacher", action = "Dashboard" }
+            );
             
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
         

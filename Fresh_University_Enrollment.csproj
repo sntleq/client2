@@ -177,6 +177,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ProgramHeadController.cs" />
+    <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\StudentEnrollment.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -256,9 +258,9 @@
     <Content Include="Views\Shared\_AdminHeader.cshtml" />
     <Content Include="Views\Shared\_MainHeader.cshtml" />
     <Content Include="Views\Shared\_ProgramHeadHeader.cshtml" />
-    <Content Include="Views\Shared\TeacherHeader.cshtml" />
-    <Content Include="Views\Teacher\Classes.html" />
-    <Content Include="Views\Teacher\Dashboard.html" />
+    <Content Include="Views\Shared\_TeacherHeader.cshtml" />
+    <Content Include="Views\Teacher\Classes.cshtml" />
+    <Content Include="Views\Teacher\Dashboard.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
