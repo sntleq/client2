@@ -1,8 +1,15 @@
 $(document).ready(function () {
     $('#btn').click(function () {
         $('.input-error').removeClass('input-error');
+        
+        var studCode = parseInt($('#studCode').val(), 10);
+        
+        if (isNaN(studCode)) {
+            alert("Please enter a valid numeric student code.");
+            return;
+        }
         var student = {
-            Stud_Code: $('#studCode').val(),
+            Stud_Code: studCode,
             Stud_Lname: $('#lastName').val(),
             Stud_Fname: $('#firstName').val(),
             Stud_Mname: $('#middleName').val(),

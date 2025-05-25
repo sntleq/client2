@@ -1,4 +1,4 @@
-﻿using System.Web.Mvc;
+﻿﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 
@@ -157,14 +157,13 @@ namespace Fresh_University_Enrollment
           
             // Add this specific route before the default route
             routes.MapRoute(
-                name: "MainEnrollmentRoute",
+                name: "StudentEnrollmentRoute",
                 url: "Home/Enrollment",
-                defaults: new { controller = "Main", action = "Student_Enrollment" }
+                defaults: new { controller = "StudentEnrollment", action = "Student_Enrollment" }
             );
             
             
             
-        
             // Add this specific route before the default route
             routes.MapRoute(
                 name: "MainProfileRoute",
