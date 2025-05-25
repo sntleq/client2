@@ -99,7 +99,7 @@ namespace Fresh_University_Enrollment
             routes.MapRoute(
                 name: "AdminAddCourseRoute",
                 url: "Admin/Course/AddCourse",
-                defaults: new { controller = "Admin", action = "Admin_AddCourse" }
+                defaults: new { controller = "AddProgram", action = "Index" }
             );
             
             // Add this specific route before the default route
