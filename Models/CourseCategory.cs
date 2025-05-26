@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Fresh_University_Enrollment.Models;
-
-public class CourseCategory
+﻿namespace Fresh_University_Enrollment.Models
 {
-    public string CtgCode { get; set; }
-    public string CtgName { get; set; }
-
-    // Navigation Properties
-    public ICollection<Course> Courses { get; set; } = new List<Course>();
+    public class CourseCategory
+    {
+        public string Ctg_Code { get; set; }
+        public string Ctg_Name { get; set; }
+    }
 }

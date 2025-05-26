@@ -1,9 +1,9 @@
-﻿using System.Web.Mvc;
-using Fresh_University_Enrollment.Models;
+using System;
+using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Configuration;
+using Fresh_University_Enrollment.Models;
 using Npgsql;
-
 namespace Fresh_University_Enrollment.Controllers
 {
     public class AdminController : Controller
@@ -12,40 +12,54 @@ namespace Fresh_University_Enrollment.Controllers
 
         public AdminController()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
         }
 
         public ActionResult MainAdmin()
         {
+            List<int> statList = getDashboardStat();
+            ViewBag.statList = statList;
             return View("~/Views/Admin/Dashboard.cshtml");
         }
 
         public ActionResult Admin_Curriculum()
         {
-            var programs = GetProgramsFromDatabase();
-            var yearSemesterOptions = GetYearSemesterOptions();
-
-            // Create a ViewModel or use ViewBag to pass both to the view
-            ViewBag.YearSemesterOptions = yearSemesterOptions;
-
-            return View("~/Views/Admin/Curriculum.cshtml", programs);
-        }
+            try
+            {
+                var programs = GetProgramsFromDatabase();
+                var academicYears = GetAcademicYearsFromDatabase(); // Using the improved method
         
+                ViewBag.AcademicYears = academicYears;
+                return View("~/Views/Admin/Curriculum.cshtml", programs);
+            }
+            catch (Exception ex)
+            {
+                // Log error (consider using ILogger)
+                System.Diagnostics.Debug.WriteLine($"Error loading curriculum: {ex.Message}");
+        
+                // Pass an empty list to the view to prevent null reference exceptions
+                ViewBag.AcademicYears = new List<AcademicYear>();
+                return View("~/Views/Admin/Curriculum.cshtml", new List<Program>());
+            }
+        }
+
+
         public ActionResult Admin_Course()
         {
-            return View("~/Views/Admin/Courses.cshtml");
+            // Redirect to CourseController.Index instead of duplicating logic
+            return RedirectToAction("Course", "Course");
         }
 
         public ActionResult Admin_AddCourse()
         {
-            return View("~/Views/Admin/AddProgram.cshtml");
+            return RedirectToAction("Index", "AddProgram"); // Use AddProgramController
         }
 
         public ActionResult Admin_EditCourse()
         {
             return View("~/Views/Admin/EditProgram.cshtml");
         }
-
+        
         private List<Program> GetProgramsFromDatabase()
         {
             var programs = new List<Program>();
@@ -131,7 +145,7 @@ namespace Fresh_University_Enrollment.Controllers
             var semesters = GetSemesterFromDatabase();
 
             var result = new List<string>();
-
+                
             foreach (var ay in academicYears)
             {
                 foreach (var sem in semesters)
@@ -141,6 +155,37 @@ namespace Fresh_University_Enrollment.Controllers
             }
 
             return result;
+        }
+
+        public List<int> getDashboardStat()
+        {
+            var statList = new List<int>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM student"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isprofessor  IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isadmin IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isprogramhead IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Course"));
+            }
+            return statList;
+        }
+
+        public int getStat(NpgsqlConnection conn, string query)
+        {
+            int stat = 0;
+            using (var cmd = new NpgsqlCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        stat = reader.GetInt32(0);
+                    }
+                }   
+            }
+            return stat;
         }
     }
 }

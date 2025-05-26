@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
 using Fresh_University_Enrollment.Models;
 using Fresh_University_Enrollment.Utilities;
 using Npgsql;
@@ -10,7 +11,12 @@ namespace Fresh_University_Enrollment.Controllers.Auth
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+        private readonly string _connectionString;
+
+        public AuthController()
+        {
+            _connectionString = ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
+        }
         
         [HttpGet]
         [Route("Entry")]
@@ -26,7 +32,7 @@ namespace Fresh_University_Enrollment.Controllers.Auth
             try
             {
                 // Validate required fields
-                if (string.IsNullOrEmpty(student.Stud_Code) ||
+                if (student.Stud_Code == 0 || // Check for default value of int
                     string.IsNullOrEmpty(student.Stud_Lname) ||
                     string.IsNullOrEmpty(student.Stud_Fname) ||
                     student.Stud_Dob == DateTime.MinValue ||
@@ -72,7 +78,7 @@ namespace Fresh_University_Enrollment.Controllers.Auth
                     // Insert student record
                     using (var cmd = new NpgsqlCommand(@"
                         INSERT INTO STUDENT 
-                        (STUD_CODE, STUD_LNAME, STUD_FNAME, STUD_MNAME, STUD_BOD, STUD_CONTACT, STUD_EMAIL, STUD_ADDRESS, STUD_PASSWORD)
+                        (STUD_CODE, STUD_LNAME, STUD_FNAME, STUD_MNAME, STUD_DOB, STUD_CONTACT, STUD_EMAIL, STUD_ADDRESS, STUD_PASSWORD)
                         VALUES (@studCode, @lastName, @firstName, @middleName, @birthDate, @contactNo, @emailAddress, @address, @password)", db))
                     {
                         cmd.Parameters.AddWithValue("@studCode", student.Stud_Code);
@@ -193,16 +199,29 @@ public ActionResult LoginFaculty(Faculty faculty)
         {
             try
             {
-                string studCode = Request.Form["Stud_Code"];
+                // Get form values
+                string studCodeStr = Request.Form["Stud_Code"];
                 string password = Request.Form["Stud_Password"];
+
+                // Convert Stud_Code to int
+                if (!int.TryParse(studCodeStr, out int studCode))
+                {
+                    return Json(new { success = false, message = "Invalid student code format." }, JsonRequestBehavior.AllowGet);
+                }
 
                 using (var db = new NpgsqlConnection(_connectionString))
                 {
                     db.Open();
                     using (var cmd = db.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT STUD_CODE, STUD_FNAME, STUD_LNAME, STUD_EMAIL, STUD_PASSWORD FROM STUDENT WHERE STUD_CODE = @studCode";
-                        cmd.Parameters.AddWithValue("@studCode", studCode);
+                        cmd.CommandText = @"
+                            SELECT STUD_CODE, STUD_FNAME, STUD_LNAME, STUD_EMAIL, STUD_PASSWORD 
+                            FROM STUDENT 
+                            WHERE STUD_CODE = @studCode";
+
+                        // Explicitly define the parameter with correct type
+                        cmd.Parameters.Add(new NpgsqlParameter<int>("@studCode", studCode));
+
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (!reader.HasRows)
@@ -221,7 +240,7 @@ public ActionResult LoginFaculty(Faculty faculty)
 
                             var studentData = new
                             {
-                                Stud_Code = reader["STUD_CODE"].ToString(),
+                                Stud_Code = reader.GetInt32(reader.GetOrdinal("STUD_CODE")),
                                 Stud_Fname = reader["STUD_FNAME"].ToString(),
                                 Stud_Lname = reader["STUD_LNAME"].ToString(),
                                 Stud_Email = reader["STUD_EMAIL"].ToString()
@@ -242,5 +261,6 @@ public ActionResult LoginFaculty(Faculty faculty)
                 return Json(new { success = false, message = "An error occurred: " + ex.Message }, JsonRequestBehavior.DenyGet);
             }
         }
+        
     }
 }

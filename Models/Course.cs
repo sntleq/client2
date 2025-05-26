@@ -1,20 +1,15 @@
-﻿using System.Collections.Generic;
-
-namespace Fresh_University_Enrollment.Models;
-
-public class Course
+﻿namespace Fresh_University_Enrollment.Models
 {
-    public string CrsCode { get; set; }
-    public string CrsTitle { get; set; }
-    public decimal CrsUnits { get; set; }
-    public int CrsLec { get; set; }
-    public int CrsLab { get; set; }
-
-    public string? PreqId { get; set; }  // Nullable because it's optional
-    public string CtgCode { get; set; }
-
-    // Navigation Properties
-    public Course Prerequisite { get; set; }  // Self-referencing foreign key
-    public CourseCategory Category { get; set; }
-    public ICollection<CurriculumCourse> CurriculumCourses { get; set; } = new List<CurriculumCourse>();
+    public class Course
+    {
+        public string Crs_Code { get; set; }
+        public string Crs_Title { get; set; }
+        public decimal Crs_Units { get; set; }
+        public int Crs_Lec { get; set; }       
+        public int Crs_Lab { get; set; }        
+        public string Ctg_Code { get; set; }    
+        public string Ctg_Name { get; set; } 
+        public string Preq_Crs_Code { get; set; }
+        
+    }
 }
