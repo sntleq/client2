@@ -2,7 +2,7 @@
 using System.Web.Routing;
 
 
-namespace EnrollmentSystem
+namespace Fresh_University_Enrollment
 {
     public class RouteConfig
     {

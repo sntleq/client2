@@ -1,9 +1,9 @@
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Configuration;
-using EnrollmentSystem.Models;
+using Fresh_University_Enrollment.Models;
 using Npgsql;
-namespace EnrollmentSystem.Controllers
+namespace Fresh_University_Enrollment.Controllers
 {
     public class AdminController : Controller
     {

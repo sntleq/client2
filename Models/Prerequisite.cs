@@ -1,4 +1,4 @@
-﻿namespace EnrollmentSystem.Models
+﻿namespace Fresh_University_Enrollment.Models
 {
     public class Prerequisite
     {

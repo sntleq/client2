@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EnrollmentSystem.Models;
+namespace Fresh_University_Enrollment.Models;
 
 public class Curriculum
 {

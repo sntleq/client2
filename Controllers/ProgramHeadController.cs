@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace EnrollmentSystem.Controllers
+namespace Fresh_University_Enrollment.Controllers
 {
     public class ProgramHeadController : Controller
     {
@@ -9,22 +9,27 @@ namespace EnrollmentSystem.Controllers
         {
             return View("~/Views/Program-Head/Dashboard.cshtml");
         }
+
         public ActionResult Students()
         {
             return View("~/Views/Program-Head/ViewStudentList.cshtml");
         }
+
         public ActionResult Approval()
         {
             return View("~/Views/Program-Head/EnrollmentApproval.cshtml");
         }
+
         public ActionResult Schedule()
         {
             return View("~/Views/Program-Head/SetSchedules.cshtml");
         }
+
         public ActionResult StudentManagement()
         {
             return View("~/Views/Program-Head/StudentManagement.cshtml");
         }
+
         public ActionResult ClassManagement()
         {
             return View("~/Views/Program-Head/ClassManagement.cshtml");

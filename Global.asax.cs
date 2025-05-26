@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace EnrollmentSystem
+namespace Fresh_University_Enrollment
 {
     public class MvcApplication : System.Web.HttpApplication
     {

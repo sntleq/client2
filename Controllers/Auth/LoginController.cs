@@ -1,10 +1,9 @@
 ﻿using System.Web.Mvc;
 
-namespace EnrollmentSystem.Controllers.Auth
+namespace Fresh_University_Enrollment.Controllers.Auth
 {
     public class LoginController : Controller
     {
-        
         // GET: /Login
         public ActionResult Login()
         {
@@ -20,14 +19,13 @@ namespace EnrollmentSystem.Controllers.Auth
         public ActionResult LoginHead()
         {
             return View("~/Views/Auth/LoginProgramHead.cshtml");
-
         }
 
         public ActionResult LoginAdmin()
         {
             return View("~/Views/Auth/LoginAdmin.cshtml");
         }
-        
+
         public ActionResult SignUp()
         {
             return View("~/Views/Auth/SignUp.cshtml");

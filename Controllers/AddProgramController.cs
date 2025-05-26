@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Policy;
 using System.Web.Mvc;
-using EnrollmentSystem.Models;
+using Fresh_University_Enrollment.Models;
 using Npgsql;
 
-namespace EnrollmentSystem.Controllers
+namespace Fresh_University_Enrollment.Controllers
 {
     public class AddProgramController : Controller
     {
