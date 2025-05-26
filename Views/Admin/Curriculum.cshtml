@@ -1,3 +1,5 @@
+@model IEnumerable<Fresh_University_Enrollment.Models.Program>
+
 @{
     Layout = "~/Views/Shared/_AdminHeader.cshtml";
 }
@@ -73,29 +75,32 @@
         <div class="row g-3 align-items-end">
             <div class="col-md-6">
                 <label for="programSelect" class="form-label">Select Program:</label>
-                <select class="form-select" id="programSelect">
+                <select class="form-select" id="programSelect" name="programSelect">
                     <option value="" selected disabled>Choose Program...</option>
-                    <option value="BSIT">Bachelor of Science in Information Technology</option>
-                    <option value="BSCS">Bachelor of Science in Computer Science</option>
-                    <option value="BSA">Bachelor of Science in Accountancy</option>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var program in Model)
+                        {
+                            <option value="@program.ProgCode">@program.ProgTitle</option>
+                        }
+                    }
+                    else
+                    {
+                        <option disabled>No programs found</option>
+                    }
                 </select>
             </div>
             <div class="col-md-6">
                 <label for="yearSemesterSelect" class="form-label">Select Year and Semester:</label>
                 <select class="form-select" id="yearSemesterSelect" disabled>
                     <option value="" selected disabled>Choose Year & Semester...</option>
-                    <option value="1st Year - 1st Semester">1st Year - 1st Semester</option>
-                    <option value="1st Year - 2nd Semester">1st Year - 2nd Semester</option>
-                    <option value="1st Year - Summer">1st Year - Summer</option>
-                    <option value="2nd Year - 1st Semester">2nd Year - 1st Semester</option>
-                    <option value="2nd Year - 2nd Semester">2nd Year - 2nd Semester</option>
-                    <option value="2nd Year - Summer">2nd Year - Summer</option>
-                    <option value="3rd Year - 1st Semester">3rd Year - 1st Semester</option>
-                    <option value="3rd Year - 2nd Semester">3rd Year - 2nd Semester</option>
-                    <option value="3rd Year - Summer">3rd Year - Summer</option>
-                    <option value="4th Year - 1st Semester">4th Year - 1st Semester</option>
-                    <option value="4th Year - 2nd Semester">4th Year - 2nd Semester</option>
-                    <option value="4th Year - Summer">4th Year - Summer</option>
+                    @if (ViewBag.YearSemesterOptions != null)
+                    {
+                        foreach (string option in ViewBag.YearSemesterOptions)
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    }
                 </select>
             </div>
         </div>
@@ -405,6 +410,7 @@
         });
 
         resetYearSemesterSelect();
+        
     });
 </script>
 

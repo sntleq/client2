@@ -181,7 +181,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AcademicYear.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseCategory.cs" />
+    <Compile Include="Models\Curriculum.cs" />
+    <Compile Include="Models\CurriculumCourse.cs" />
     <Compile Include="Models\Faculty.cs" />
+    <Compile Include="Models\Program.cs" />
+    <Compile Include="Models\Semester.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\PasswordUtil.cs" />
