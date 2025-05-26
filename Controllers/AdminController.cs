@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,13 +24,23 @@ namespace Fresh_University_Enrollment.Controllers
 
         public ActionResult Admin_Curriculum()
         {
-            var programs = GetProgramsFromDatabase();
-            var yearSemesterOptions = GetYearSemesterOptions();
-
-            // Create a ViewModel or use ViewBag to pass both to the vieww
-            ViewBag.YearSemesterOptions = yearSemesterOptions;
-
-            return View("~/Views/Admin/Curriculum.cshtml", programs);
+            try
+            {
+                var programs = GetProgramsFromDatabase();
+                var academicYears = GetAcademicYearsFromDatabase(); // Using the improved method
+        
+                ViewBag.AcademicYears = academicYears;
+                return View("~/Views/Admin/Curriculum.cshtml", programs);
+            }
+            catch (Exception ex)
+            {
+                // Log error (consider using ILogger)
+                System.Diagnostics.Debug.WriteLine($"Error loading curriculum: {ex.Message}");
+        
+                // Pass an empty list to the view to prevent null reference exceptions
+                ViewBag.AcademicYears = new List<AcademicYear>();
+                return View("~/Views/Admin/Curriculum.cshtml", new List<Program>());
+            }
         }
 
 
