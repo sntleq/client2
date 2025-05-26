@@ -1,146 +1,232 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Security.Policy;
 using System.Web.Mvc;
-using Fresh_University_Enrollment.Models;
+using EnrollmentSystem.Models;
 using Npgsql;
 
-namespace Fresh_University_Enrollment.Controllers
+namespace EnrollmentSystem.Controllers
 {
     public class AddProgramController : Controller
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+        private readonly ICourseRepository _courseRepository;
+
+        public AddProgramController()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
+            _courseRepository = new CourseRepository(connectionString);
+        }
 
         // GET: /AddProgram/
         public ActionResult Index()
         {
-            ViewBag.CourseCategories = GetCourseCategories();
-            ViewBag.CoursesForPrereq = GetCoursesForPrerequisite();
-
-            return View("~/Views/Admin/AddProgram.cshtml");
+            try
+            {
+                ViewBag.CourseCategories = _courseRepository.GetCourseCategories();
+                ViewBag.CoursesForPrereq = _courseRepository.GetAllCourses();
+                return View("~/Views/Admin/AddProgram.cshtml");
+            }
+            catch (Exception ex)
+            {
+                // Log error here
+                return View("Error");
+            }
         }
 
         // POST: /AddProgram/AddCourseAjax
         [HttpPost]
-[ValidateAntiForgeryToken]
-public JsonResult AddCourseAjax(Course course)
-{
-    if (ModelState.IsValid)
-    {
-        try
+        public JsonResult AddCourseAjax(Course course)
         {
-            using (var conn = new NpgsqlConnection(_connectionString))
+            if (!ModelState.IsValid)
             {
-                conn.Open();
-
-                // Insert into COURSE table
-                using (var cmd = new NpgsqlCommand(@"
-                    INSERT INTO COURSE (
-                        CRS_CODE, 
-                        CRS_TITLE, 
-                        CTG_CODE, 
-                        PREQ_ID, 
-                        CRS_UNITS, 
-                        CRS_LEC, 
-                        CRS_LAB
-                    ) VALUES (
-                        @code, 
-                        @title, 
-                        @ctgCode, 
-                        @prereq, 
-                        @units, 
-                        @lec, 
-                        @lab)", conn))
-                {
-                    cmd.Parameters.AddWithValue("code", course.Crs_Code);
-                    cmd.Parameters.AddWithValue("title", course.Crs_Title);
-                    cmd.Parameters.AddWithValue("ctgCode", course.Ctg_Code);
-                    cmd.Parameters.AddWithValue("prereq", (object)course.Preq_Crs_Code ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("units", course.Crs_Units);
-                    cmd.Parameters.AddWithValue("lec", course.Crs_Lec);
-                    cmd.Parameters.AddWithValue("lab", course.Crs_Lab);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                // Optional: Save to PREREQUISITE table
-                if (!string.IsNullOrEmpty(course.Preq_Crs_Code) && course.Preq_Crs_Code != "None")
-                {
-                    using (var cmd = new NpgsqlCommand(@"
-                        DELETE FROM PREREQUISITE WHERE CRS_CODE = @crsCode; -- Avoid duplicate insert
-                        INSERT INTO PREREQUISITE (CRS_CODE, PREQ_CRS_CODE)
-                        VALUES (@crsCode, @preqCode);", conn))
-                    {
-                        cmd.Parameters.AddWithValue("crsCode", course.Crs_Code);
-                        cmd.Parameters.AddWithValue("preqCode", course.Preq_Crs_Code);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                return Json(new { success = true, message = "Course added successfully!" });
+                return Json(new { success = false, message = "Invalid input data." });
             }
-        }
-        catch (Exception ex)
-        {
-            return Json(new { success = false, message = "Error: " + ex.Message });
+
+            try
+            {
+                var result = _courseRepository.AddCourse(course);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return Json(new { 
+                    success = false, 
+                    message = "An error occurred while saving the course.",
+                    error = ex.Message 
+                });
+            }
         }
     }
 
-    return Json(new { success = false, message = "Invalid input." });
-}
+    public interface ICourseRepository
+    {
+        JsonResult AddCourse(Course course);
+        List<CourseCategory> GetCourseCategories();
+        List<Course> GetAllCourses();
+    }
 
-        // Helper: Fetch Course Categories
-        private List<CourseCategory> GetCourseCategories()
+    public class CourseRepository : ICourseRepository
+    {
+        private readonly string _connectionString;
+
+        public CourseRepository(string connectionString)
         {
-            var categories = new List<CourseCategory>();
-
-            using (var conn = new NpgsqlConnection(_connectionString))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT CTG_CODE, CTG_NAME FROM COURSE_CATEGORY", conn))
-                {
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            categories.Add(new CourseCategory
-                            {
-                                Ctg_Code = reader["CTG_CODE"]?.ToString(),
-                                Ctg_Name = reader["CTG_NAME"]?.ToString()
-                            });
-                        }
-                    }
-                }
-            }
-
-            return categories;
+            _connectionString = connectionString;
         }
 
-        // Helper: Fetch Courses for Prerequisite Dropdown
-        private List<Course> GetCoursesForPrerequisite()
+        public JsonResult AddCourse(Course course)
         {
-            var courses = new List<Course>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check for duplicate course code
+                        if (CourseCodeExists(conn, course.Crs_Code))
+                        {
+                            return new JsonResult
+                            {
+                                Data = new { 
+                                    success = false, 
+                                    message = "A course with this code already exists." 
+                                }
+                            };
+                        }
+
+                        // Check for duplicate course title
+                        if (CourseTitleExists(conn, course.Crs_Title))
+                        {
+                            return new JsonResult
+                            {
+                                Data = new { 
+                                    success = false, 
+                                    message =  "A course with this title already exists." 
+                                }
+                            };
+                        }
+                        InsertMainCourse(conn, course);
+
+                        transaction.Commit();
+                        return new JsonResult
+                        {
+                            Data = new { success = true, message = "Course added successfully!", redirectUrl = "/Admin/Admin_Course"
+                            }
+                        };
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return new JsonResult
+                        {
+                            Data = new { 
+                                success = false, 
+                                message = "An error occurred while saving the course.",
+                                error = ex.Message 
+                            }
+                        };
+                    }
+                }
+            }
+        }
+
+        private bool CourseCodeExists(NpgsqlConnection conn, string code)
+        {
+            const string sql = "SELECT 1 FROM COURSE WHERE CRS_CODE = @code";
+            using (var cmd = new NpgsqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("code", code);
+                return cmd.ExecuteScalar() != null;
+            }
+        }
+
+        private bool CourseTitleExists(NpgsqlConnection conn, string title)
+        {
+            const string sql = "SELECT 1 FROM COURSE WHERE CRS_TITLE = @title";
+            using (var cmd = new NpgsqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("title", title);
+                return cmd.ExecuteScalar() != null;
+            }
+        }
+
+        private void InsertMainCourse(NpgsqlConnection conn, Course course)
+        {
+            const string insertCourseSql = @"
+                INSERT INTO COURSE (
+                    CRS_CODE, 
+                    CRS_TITLE, 
+                    CTG_CODE, 
+                    PREQ_ID, 
+                    CRS_UNITS, 
+                    CRS_LEC, 
+                    CRS_LAB
+                ) VALUES (
+                    @code, 
+                    @title, 
+                    @ctgCode, 
+                    @prereq, 
+                    @units, 
+                    @lec, 
+                    @lab)";
+
+            using (var cmd = new NpgsqlCommand(insertCourseSql, conn))
+            {
+                cmd.Parameters.AddWithValue("code", course.Crs_Code);
+                cmd.Parameters.AddWithValue("title", course.Crs_Title);
+                cmd.Parameters.AddWithValue("ctgCode", course.Ctg_Code);
+                cmd.Parameters.AddWithValue("prereq", course.Preq_Crs_Code);
+                cmd.Parameters.AddWithValue("units", course.Crs_Units);
+                cmd.Parameters.AddWithValue("lec", course.Crs_Lec);
+                cmd.Parameters.AddWithValue("lab", course.Crs_Lab);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+        
+
+        public List<CourseCategory> GetCourseCategories()
+        {
+            const string sql = "SELECT CTG_CODE, CTG_NAME FROM COURSE_CATEGORY";
+            return ExecuteQuery<CourseCategory>(sql, reader => new CourseCategory
+            {
+                Ctg_Code = reader["CTG_CODE"]?.ToString(),
+                Ctg_Name = reader["CTG_NAME"]?.ToString()
+            });
+        }
+
+        public List<Course> GetAllCourses()
+        {
+            const string sql = "SELECT CRS_CODE, CRS_TITLE FROM COURSE ORDER BY CRS_CODE";
+            return ExecuteQuery<Course>(sql, reader => new Course
+            {
+                Crs_Code = reader["CRS_CODE"]?.ToString(),
+                Crs_Title = reader["CRS_TITLE"]?.ToString()
+            });
+        }
+
+        private List<T> ExecuteQuery<T>(string sql, Func<NpgsqlDataReader, T> mapper)
+        {
+            var results = new List<T>();
 
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT CRS_CODE, CRS_TITLE FROM COURSE ORDER BY CRS_CODE", conn))
+                using (var cmd = new NpgsqlCommand(sql, conn))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            courses.Add(new Course
-                            {
-                                Crs_Code = reader["CRS_CODE"]?.ToString(),
-                                Crs_Title = reader["CRS_TITLE"]?.ToString()
-                            });
+                            results.Add(mapper(reader));
                         }
                     }
                 }
             }
 
-            return courses;
+            return results;
         }
     }
 }

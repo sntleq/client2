@@ -19,7 +19,7 @@ $(document).ready(function () {
             Stud_Address: $('#address').val(),
             Stud_Password: $('#newPassword').val()
         };
-
+        console.log(student);
         $.ajax({
             type: "POST",
             url: '/Auth/Entry',

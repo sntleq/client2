@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fresh_University_Enrollment.Utilities
+namespace EnrollmentSystem.Utilities
 {
     public static class PasswordUtil
     {

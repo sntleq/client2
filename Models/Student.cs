@@ -1,4 +1,4 @@
-﻿namespace Fresh_University_Enrollment.Models
+﻿namespace EnrollmentSystem.Models
 
 {
 

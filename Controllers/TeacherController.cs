@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Fresh_University_Enrollment.Controllers
+namespace EnrollmentSystem.Controllers
 {
     public class TeacherController : Controller
     {

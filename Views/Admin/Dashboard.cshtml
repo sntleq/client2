@@ -1,5 +1,10 @@
 @{
     Layout = "~/Views/Shared/_AdminHeader.cshtml"; // Make sure this layout includes @RenderSection("Scripts", required: false)
+    var student = ViewBag.statList[0];
+    var admin = ViewBag.statList[1];
+    var professor = ViewBag.statList[2];
+    var programHead = ViewBag.statList[3];
+    var course = ViewBag.statList[4];
 }
 
 <!DOCTYPE html>
@@ -55,38 +60,33 @@
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Admins</h3>
-                <div class="count">1</div>
+                <div class="count">@admin</div>
 
-                <div class="count">@ViewBag.TotalAdmins</div> <!-- Example of using dynamic data -->
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Program Heads</h3>
-                <div class="count">5</div>
+                <div class="count">@programHead</div>
 
-                <div class="count">@ViewBag.TotalProgramHeads</div>
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Teachers</h3>
-                <div class="count">50</div>
-                <div class="count">@ViewBag.TotalTeachers</div>
+                <div class="count">@professor</div>
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Students</h3>
-                <div class="count">500</div>
-                <div class="count">@ViewBag.TotalStudents</div>
+                <div class="count">@student</div>
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">
             <div class="metric-card">
                 <h3>Total Courses</h3>
-                <div class="count">10</div>
-                <div class="count">@ViewBag.TotalCourses</div>
+                <div class="count">@course</div>
             </div>
         </div>
         <div class="col-md-4 col-sm-6 mb-4">

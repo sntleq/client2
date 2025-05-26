@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fresh_University_Enrollment.Models
+namespace EnrollmentSystem.Models
 {
     public class Semester
     {

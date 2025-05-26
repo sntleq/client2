@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
-using Fresh_University_Enrollment.Models;
 using System.Collections.Generic;
 using System.Configuration;
+using EnrollmentSystem.Models;
 using Npgsql;
-namespace Fresh_University_Enrollment.Controllers
+namespace EnrollmentSystem.Controllers
 {
     public class AdminController : Controller
     {
@@ -11,11 +11,13 @@ namespace Fresh_University_Enrollment.Controllers
 
         public AdminController()
         {
-            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
         }
 
         public ActionResult MainAdmin()
         {
+            List<int> statList = getDashboardStat();
+            ViewBag.statList = statList;
             return View("~/Views/Admin/Dashboard.cshtml");
         }
 
@@ -34,7 +36,7 @@ namespace Fresh_University_Enrollment.Controllers
         public ActionResult Admin_Course()
         {
             // Redirect to CourseController.Index instead of duplicating logic
-            return RedirectToAction("Index", "Course");
+            return RedirectToAction("Course", "Course");
         }
 
         public ActionResult Admin_AddCourse()
@@ -132,7 +134,7 @@ namespace Fresh_University_Enrollment.Controllers
             var semesters = GetSemesterFromDatabase();
 
             var result = new List<string>();
-
+                
             foreach (var ay in academicYears)
             {
                 foreach (var sem in semesters)
@@ -142,6 +144,37 @@ namespace Fresh_University_Enrollment.Controllers
             }
 
             return result;
+        }
+
+        public List<int> getDashboardStat()
+        {
+            var statList = new List<int>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM student"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isprofessor  IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isadmin IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Faculty WHERE isprogramhead IS TRUE"));
+                statList.Add(getStat(conn, "SELECT COUNT(*) FROM Course"));
+            }
+            return statList;
+        }
+
+        public int getStat(NpgsqlConnection conn, string query)
+        {
+            int stat = 0;
+            using (var cmd = new NpgsqlCommand(query, conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        stat = reader.GetInt32(0);
+                    }
+                }   
+            }
+            return stat;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Fresh_University_Enrollment.Controllers;
+﻿namespace EnrollmentSystem.Controllers;
 
 public class StudentEnrollment
 {

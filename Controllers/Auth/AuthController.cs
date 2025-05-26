@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Configuration;
 using System.Web.Mvc;
-using Fresh_University_Enrollment.Models;
-using Fresh_University_Enrollment.Utilities;
+using System.Web.Mvc.Filters;
+using EnrollmentSystem.Models;
+using EnrollmentSystem.Utilities;
 using Npgsql;
 
-namespace Fresh_University_Enrollment.Controllers.Auth
+namespace EnrollmentSystem.Controllers.Auth
 {
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+        private readonly string _connectionString;
+
+        public AuthController()
+        {
+            _connectionString = ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
+        }
         
         [HttpGet]
         [Route("Entry")]

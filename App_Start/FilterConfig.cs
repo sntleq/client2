@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Fresh_University_Enrollment
+namespace EnrollmentSystem
 {
     public class FilterConfig
     {

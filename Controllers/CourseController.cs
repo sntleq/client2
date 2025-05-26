@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
-using Fresh_University_Enrollment.Models;
+using EnrollmentSystem.Models;
 using Npgsql;
 
-namespace Fresh_University_Enrollment.Controllers
+namespace EnrollmentSystem.Controllers
 {
     public class CourseController : Controller
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+        private readonly string _connectionString;
 
-        // GET: /Course/
-        public ActionResult Index()
+        public CourseController()
         {
-            var courses = GetCoursesFromDatabase();
-            return View("~/Views/Admin/Courses.cshtml", courses);
+            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
         }
 
+        public ActionResult Course()
+        {
+            var courses = GetCoursesFromDatabase(); 
+            return View("~/Views/Admin/Courses.cshtml",courses);
+        }
         // GET: /Course/Create
         public ActionResult Create()
         {
