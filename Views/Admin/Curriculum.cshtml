@@ -1,8 +1,6 @@
-@model IEnumerable<Fresh_University_Enrollment.Models.Program>
-
 
 @{
-    Layout = "~/Views/Shared/_AdminHeader.cshtml";
+Layout = "~/Views/Shared/_AdminHeader.cshtml";
 }
 
 <!DOCTYPE html>
@@ -67,9 +65,12 @@
                 <label for="programSelect" class="form-label">Select Program:</label>
                 <select class="form-select" id="programSelect" name="programSelect">
                     <option value="" selected disabled>Choose Program...</option>
-                    @if (Model != null && Model.Any())
+                    @{
+                        var programs = ViewBag.Programs as List<Fresh_University_Enrollment.Models.Program>;
+                    }
+                    @if (programs?.Any() == true)
                     {
-                        foreach (var program in Model)
+                        foreach (var program in programs)
                         {
                             <option value="@program.ProgCode">@program.ProgTitle</option>
                         }
@@ -85,18 +86,18 @@
                 <select class="form-select" id="academicYearSelect" name="academicYearSelect">
                     <option value="" selected disabled>Choose Academic Year...</option>
                     @{
-                        var academicYears = ViewBag.AcademicYears as List<Fresh_University_Enrollment.Models.AcademicYear>;
-                        if (academicYears?.Any() == true)
-                        {
-                            foreach (var year in academicYears)
-                            {
-                                <option value="@year.AyCode">@year.AyStartYear - @year.AyEndYear</option>
-                            }
-                        }
-                        else
-                        {
-                            <option disabled>No academic years available</option>
-                        }
+                    var academicYears = ViewBag.AcademicYears as List<Fresh_University_Enrollment.Models.AcademicYear>;
+                    if (academicYears?.Any() == true)
+                    {
+                    foreach (var year in academicYears)
+                    {
+                    <option value="@year.AyCode">@year.AyStartYear - @year.AyEndYear</option>
+                    }
+                    }
+                    else
+                    {
+                    <option disabled>No academic years available</option>
+                    }
                     }
                 </select>
             </div>
@@ -153,7 +154,7 @@
                 <h5 class="modal-title" id="assignCourseModalLabel">Assign Courses to Program</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body">    
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Current Program:</label>
@@ -212,7 +213,7 @@
             "BSCS": [
                 // Add your BSCS course entries here...
             ]
-        };
+        }; 
 
         // JS logic to populate and handle filters, search, etc...
     });
