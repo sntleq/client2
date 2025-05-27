@@ -31,7 +31,6 @@ $('#editScheduleModal').on('show.bs.modal', function (e) {
             <td>${session.TslEndTime}</td>
             <td>
                 <button class="btn btn-sm btn-warning edit-session-btn" data-bs-toggle="modal" data-bs-target="#editSessionModal" data-parent="#editScheduleModal" data-ssnid="${session.SsnId}">Edit</button>
-                <button class="btn btn-sm btn-danger">Delete</button>
             </td>
         </tr>`;
         sessionTable.append(row);
