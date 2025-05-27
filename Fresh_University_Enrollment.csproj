@@ -266,7 +266,6 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\LoginFaculty.cshtml" />
     <Content Include="Views\Auth\SignUp.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Main\ClassSchedule.cshtml" />
     <Content Include="Views\Main\Home.cshtml" />
     <Content Include="Views\Main\StudentEnroll.cshtml" />
@@ -297,13 +296,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Indexorig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
     <Content Include="Content\bootstrap-utilities.rtl.css.map" />
     <Content Include="Content\bootstrap-utilities.min.css.map" />
