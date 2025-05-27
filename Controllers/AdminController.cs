@@ -27,12 +27,10 @@ namespace Fresh_University_Enrollment.Controllers
             try
             {
                 var programs = GetProgramsFromDatabase();
-                var academicYears = GetAcademicYearsFromDatabase(); 
-                
-                ViewBag.Programs = programs;
+                var academicYears = GetAcademicYearsFromDatabase(); // Using the improved method
+        
                 ViewBag.AcademicYears = academicYears;
-                
-                return View("~/Views/Admin/Curriculum.cshtml");
+                return View("~/Views/Admin/Curriculum.cshtml", programs);
             }
             catch (Exception ex)
             {
@@ -188,49 +186,6 @@ namespace Fresh_University_Enrollment.Controllers
                 }   
             }
             return stat;
-        }
-        
-        private List<Course> GetCoursesFromDatabase()
-        {
-            var courses = new List<Course>();
-
-            using (var conn = new NpgsqlConnection(_connectionString))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand(@"
-            SELECT 
-                c.""crs_code"", 
-                c.""crs_title"", 
-                c.""crs_units"", 
-                c.""crs_lec"", 
-                c.""crs_lab"", 
-                c.""ctg_code"",
-                COALESCE(cat.""ctg_name"", 'Uncategorized'),
-                c.""preq_crs_code""
-            FROM ""course"" c
-            LEFT JOIN ""course_category"" cat ON c.""ctg_code"" = cat.""ctg_code""", conn))
-                {
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            courses.Add(new Course
-                            {
-                                Crs_Code = !reader.IsDBNull(0) ? reader.GetString(0) : null,
-                                Crs_Title = !reader.IsDBNull(1) ? reader.GetString(1) : null,
-                                Crs_Units = reader.GetDecimal(2),
-                                Crs_Lec = reader.GetInt32(3),
-                                Crs_Lab = reader.GetInt32(4),
-                                Ctg_Code = !reader.IsDBNull(5) ? reader.GetString(5) : null,
-                                Ctg_Name = !reader.IsDBNull(6) ? reader.GetString(6) : "Uncategorized",
-                                Preq_Crs_Code = !reader.IsDBNull(7) ? reader.GetString(7) : null
-                            });
-                        }
-                    }
-                }
-            }
-
-            return courses;
         }
     }
 }
