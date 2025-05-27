@@ -8,15 +8,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2025_10_07_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2025_10_07_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/CurriculumCourseController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App_Start/RouteConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App_Start/RouteConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Auth/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Auth/AuthController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/StudentEnrollment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/StudentEnrollment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Main/Home.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Main/Home.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Main/StudentEnroll.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Main/StudentEnroll.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Program-Head/ClassManagement.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Program-Head/ClassManagement.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/Web.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,22 +37,22 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "LemoonRay"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LemoonRay&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Yohhannn/Fresh_University_Enrollment.git",
-    "accountId": "a31591a0-93bf-46cd-b961-b73bebd65d7b"
+    "accountId": "61fdca46-29f3-4293-9bed-1de76fbf448f"
   }
 }]]></component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/raymo/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/raymo/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/raymo/RiderProjects/Fresh_University_Enrollment/Web.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$APPLICATION_HOME_DIR$/lib/app.jar!/resources/html5-schema/html5/web-forms.rnc" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -67,7 +69,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "ray-dev",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -83,13 +85,8 @@
       <option name="WORKING_DIRECTORY" value="" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="ENV_FILE_PATHS" value="" />
-      <option name="REDIRECT_INPUT_PATH" value="" />
-      <option name="PTY_MODE" value="Auto" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="AUTO_ATTACH_CHILDREN" value="0" />
-      <option name="MIXED_MODE_DEBUG" value="0" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/Fresh_University_Enrollment.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -102,6 +99,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="" />
@@ -113,6 +111,7 @@
       <workItem from="1748114199111" duration="1001000" />
       <workItem from="1748268423395" duration="12157000" />
       <workItem from="1748283790276" duration="1594000" />
+      <workItem from="1748330577781" duration="6982000" />
     </task>
     <task id="LOCAL-00001" summary="add curriculum good">
       <option name="closed" value="true" />
@@ -134,23 +133,5 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="add curriculum good" />
     <option name="LAST_COMMIT_MESSAGE" value="add curriculum good" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
-          <option name="timeStamp" value="2" />
-        </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
-          <option name="timeStamp" value="3" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

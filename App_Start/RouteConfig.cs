@@ -156,10 +156,11 @@ namespace Fresh_University_Enrollment
             
           
             // Add this specific route before the default route
+
             routes.MapRoute(
-                name: "StudentEnrollmentRoute",
-                url: "Home/Enrollment",
-                defaults: new { controller = "StudentEnrollment", action = "Student_Enrollment" }
+                name: "StudentEnrollment",
+                url: "Main/Student_Enrollment",
+                defaults: new { controller = "StudentEnrollment", action = "Enrollment" }
             );
             
             
