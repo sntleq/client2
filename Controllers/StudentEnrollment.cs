@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
 using Fresh_University_Enrollment.Models;
@@ -8,11 +9,39 @@ namespace Fresh_University_Enrollment.Controllers
 {
     public class StudentEnrollmentController : Controller
     {
+        private List<Program> GetProgramsFromDatabase()
+        {
+            var programs = new List<Program>();
+
+            using (var conn = new NpgsqlConnection(connString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand("SELECT \"prog_code\", \"prog_title\" FROM \"program\"", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            programs.Add(new Program
+                            {
+                                ProgCode = reader.GetString(0),
+                                ProgTitle = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return programs;
+        }
+
+
         private string connString = ConfigurationManager.ConnectionStrings["Enrollment"].ConnectionString;
 
         public ActionResult Student_Enrollment()
         {
             var sessionStudCode = Session["Stud_Code"];
+            var programs = GetProgramsFromDatabase();
 
             if (sessionStudCode == null)
             {
@@ -63,6 +92,7 @@ namespace Fresh_University_Enrollment.Controllers
             }
 
             // Use full path to ensure it finds the correct view
+            ViewBag.Programs = programs;
             return View("~/Views/Main/StudentEnroll.cshtml", student);
         }
     }
