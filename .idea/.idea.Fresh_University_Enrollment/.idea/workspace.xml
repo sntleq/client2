@@ -7,18 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App_Start/RouteConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App_Start/RouteConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AdminController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/Auth/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Auth/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/StudentEnrollment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/StudentEnrollment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Main/Home.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Main/Home.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Main/StudentEnroll.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Main/StudentEnroll.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Program-Head/ClassManagement.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Program-Head/ClassManagement.cshtml" afterDir="false" />
+    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="- Added auto fill out enrollment form">
       <change beforePath="$PROJECT_DIR$/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/Web.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +42,12 @@
     <setting file="jar://$APPLICATION_HOME_DIR$/lib/app.jar!/resources/html5-schema/html5/web-forms.rnc" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/App_Start/RouteConfig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/Controllers/AdminController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/Views/Admin/Curriculum.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/Views/Main/StudentEnroll.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/Web.config" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/joeha/RiderProjects/Fresh_University_Enrollment/Web.config" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -69,7 +64,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "dev-null",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -111,7 +106,7 @@
       <workItem from="1748114199111" duration="1001000" />
       <workItem from="1748268423395" duration="12157000" />
       <workItem from="1748283790276" duration="1594000" />
-      <workItem from="1748330577781" duration="6982000" />
+      <workItem from="1748330577781" duration="7360000" />
     </task>
     <task id="LOCAL-00001" summary="add curriculum good">
       <option name="closed" value="true" />
@@ -121,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748283840796</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- Added auto fill out enrollment form">
+      <option name="closed" value="true" />
+      <created>1748341368177</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748341368177</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +135,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="add curriculum good" />
-    <option name="LAST_COMMIT_MESSAGE" value="add curriculum good" />
+    <MESSAGE value="- Added auto fill out enrollment form" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added auto fill out enrollment form" />
   </component>
 </project>
