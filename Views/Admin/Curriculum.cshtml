@@ -1,15 +1,16 @@
+@model IEnumerable<Fresh_University_Enrollment.Models.Program>
 
 @{
-Layout = "~/Views/Shared/_AdminHeader.cshtml";
+    Layout = "~/Views/Shared/_AdminHeader.cshtml";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Manage Programs - Enrollment System</title>
-    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -65,40 +66,23 @@ Layout = "~/Views/Shared/_AdminHeader.cshtml";
                 <label for="programSelect" class="form-label">Select Program:</label>
                 <select class="form-select" id="programSelect" name="programSelect">
                     <option value="" selected disabled>Choose Program...</option>
-                    @{
-                    var programs = ViewBag.Programs as List<Fresh_University_Enrollment.Models.Program>;
-                    }
-                    @if (programs?.Any() == true)
+                    @if (Model != null && Model.Any())
                     {
-                    foreach (var program in programs)
-                    {
-                    <option value="@program.ProgCode">@program.ProgTitle</option>
-                    }
+                        foreach (var program in Model)
+                        {
+                            <option value="@program.ProgCode">@program.ProgTitle</option>
+                        }
                     }
                     else
                     {
-                    <option disabled>No programs found</option>
+                        <option disabled>No programs found</option>
                     }
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="academicYearSelect" class="form-label">Academic Year:</label>
-                <select class="form-select" id="academicYearSelect" name="academicYearSelect">
+                <select class="form-select" id="academicYearSelect" name="academicYearSelect" disabled>
                     <option value="" selected disabled>Choose Academic Year...</option>
-                    @{
-                    var academicYears = ViewBag.AcademicYears as List<Fresh_University_Enrollment.Models.AcademicYear>;
-                    if (academicYears?.Any() == true)
-                    {
-                    foreach (var year in academicYears)
-                    {
-                    <option value="@year.AyCode">@year.AyStartYear - @year.AyEndYear</option>
-                    }
-                    }
-                    else
-                    {
-                    <option disabled>No academic years available</option>
-                    }
-                    }
                 </select>
             </div>
             <div class="col-md-4">
@@ -175,7 +159,11 @@ Layout = "~/Views/Shared/_AdminHeader.cshtml";
                             <th width="50px"></th>
                             <th>Course Code</th>
                             <th>Title</th>
+                            <th>Category</th>
+                            <th>Co-/Prerequisite</th>
                             <th>Units</th>
+                            <th>Lec Hours</th>
+                            <th>Lab Hours</th>
                         </tr>
                         </thead>
                         <tbody id="availableCoursesList"></tbody>
@@ -190,34 +178,9 @@ Layout = "~/Views/Shared/_AdminHeader.cshtml";
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/jquery-3.6.0.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.7.0.js")"></script>
 <script src="@Url.Content("~/Scripts/bootstrap.bundle.min.js")"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const programSelect = document.getElementById('programSelect');
-        const programDetailsTable = document.getElementById('programDetailsTable');
-        const selectedProgramTitle = document.getElementById('selectedProgramTitle');
-        const programTableBody = document.getElementById('programTableBody');
-        const modalProgramName = document.getElementById('modalProgramName');
-        const modalYearSemester = document.getElementById('modalYearSemester');
-        const availableCoursesList = document.getElementById('availableCoursesList');
-        const courseSearch = document.getElementById('courseSearch');
-
-        const programData = {
-            "BSIT": [
-                { code: "IT101", title: "Introduction to Computing", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
-                { code: "IT102", title: "Programming Logic and Design", prerequisite: "None", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "1st Semester" },
-                { code: "GE101", title: "Understanding the Self", prerequisite: "None", units: 3, lec: 3, lab: 0, year: "1st Year", semester: "1st Semester" },
-                { code: "IT103", title: "Web Development Fundamentals", prerequisite: "IT102", units: 3, lec: 2, lab: 1, year: "1st Year", semester: "2nd Semester" }
-            ],
-            "BSCS": [
-                // Add your BSCS course entries here...
-            ]
-        };
-
-        // JS logic to populate and handle filters, search, etc...
-    });
-</script>
+<script src="@Url.Content("~/Scripts/MyScript/Curriculum.js")"></script>
 
 </body>
 </html>
