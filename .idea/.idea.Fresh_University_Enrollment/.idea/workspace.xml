@@ -7,7 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="- You should now be able create course without picking any prerequisites">
+    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="partial">
+      <change afterPath="$PROJECT_DIR$/Controllers/ScheduleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ProgramHeadController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ProgramHeadController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fresh_University_Enrollment.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Fresh_University_Enrollment.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Program-Head/SetSchedules.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Program-Head/SetSchedules.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/Web.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +114,7 @@
       <workItem from="1748283790276" duration="1594000" />
       <workItem from="1748330577781" duration="7360000" />
       <workItem from="1748350697044" duration="1718000" />
-      <workItem from="1748352427065" duration="7669000" />
+      <workItem from="1748352427065" duration="9724000" />
     </task>
     <task id="LOCAL-00001" summary="add curriculum good">
       <option name="closed" value="true" />
@@ -135,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748360425282</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="partial">
+      <option name="closed" value="true" />
+      <created>1748360849623</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748360849623</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +161,7 @@
     <MESSAGE value="add curriculum good" />
     <MESSAGE value="- Added auto fill out enrollment form" />
     <MESSAGE value="- You should now be able create course without picking any prerequisites" />
-    <option name="LAST_COMMIT_MESSAGE" value="- You should now be able create course without picking any prerequisites" />
+    <MESSAGE value="partial" />
+    <option name="LAST_COMMIT_MESSAGE" value="partial" />
   </component>
 </project>
