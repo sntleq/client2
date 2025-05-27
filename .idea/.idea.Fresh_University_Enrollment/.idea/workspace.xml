@@ -7,16 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2025_10_07_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/shelf/Uncommitted_changes_before_Checkout_at_26_05_2025_10_07_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/CurriculumCourseController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Scripts/MyScript/Curriculum.js" afterDir="false" />
+    <list default="true" id="b3e7d800-34df-40fc-b921-9544f37113d3" name="Changes" comment="Merge branch 'master' of https://github.com/Yohhannn/Fresh_University_Enrollment into Jayson&#10;&#10;# Conflicts:&#10;#&#9;.idea/.idea.Fresh_University_Enrollment/.idea/workspace.xml&#10;#&#9;.idea/config/applicationhost.config&#10;#&#9;Views/Admin/Curriculum.cshtml&#10;#&#9;Web.config">
       <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Admin/Curriculum.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web.config" beforeDir="false" afterPath="$PROJECT_DIR$/Web.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,18 +28,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "LemoonRay"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LemoonRay&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Yohhannn/Fresh_University_Enrollment.git",
-    "accountId": "a31591a0-93bf-46cd-b961-b73bebd65d7b"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Yohhannn/Fresh_University_Enrollment.git&quot;,
+    &quot;accountId&quot;: &quot;a31591a0-93bf-46cd-b961-b73bebd65d7b&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Users/raymo/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Users/raymo/RiderProjects/Fresh_University_Enrollment/.idea/config/applicationhost.config" root0="FORCE_HIGHLIGHTING" />
@@ -67,7 +60,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "ray-dev",
+    "git-widget-placeholder": "Jayson",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
