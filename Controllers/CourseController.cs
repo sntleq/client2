@@ -36,7 +36,7 @@ namespace Fresh_University_Enrollment.Controllers
             return View("~/Views/Admin/EditProgram.cshtml", course);
         }
 
-        // GET: /Course/GetAll
+        // GET: /Course/GetAllCourses
         [HttpGet]
         public JsonResult GetAllCourses()
         {
@@ -46,7 +46,19 @@ namespace Fresh_University_Enrollment.Controllers
                 using (var db = new NpgsqlConnection(_connectionString))
                 {
                     db.Open();
-                    using (var cmd = new NpgsqlCommand("SELECT CRS_CODE, CRS_TITLE FROM COURSE", db))
+                    using (var cmd = new NpgsqlCommand(@"
+                        SELECT 
+                            c.CRS_CODE, 
+                            c.CRS_TITLE, 
+                            COALESCE(cat.CTG_NAME, 'General') AS Category,
+                            COALESCE(p.PREQ_CRS_CODE, 'None') AS Prerequisite,
+                            c.CRS_UNITS, 
+                            c.CRS_LEC, 
+                            c.CRS_LAB
+                        FROM COURSE c
+                        LEFT JOIN COURSE_CATEGORY cat ON c.CTG_CODE = cat.CTG_CODE
+                        LEFT JOIN PREREQUISITE p ON p.CRS_CODE = c.CRS_CODE
+                    ", db))
                     {
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -55,7 +67,12 @@ namespace Fresh_University_Enrollment.Controllers
                                 courses.Add(new
                                 {
                                     code = reader["CRS_CODE"].ToString(),
-                                    title = reader["CRS_TITLE"].ToString()
+                                    title = reader["CRS_TITLE"].ToString(),
+                                    category = reader["Category"].ToString(),
+                                    prerequisite = reader["Prerequisite"].ToString(),
+                                    units = reader["CRS_UNITS"] != DBNull.Value ? Convert.ToDecimal(reader["CRS_UNITS"]) : 0,
+                                    lec = reader["CRS_LEC"] != DBNull.Value ? Convert.ToInt32(reader["CRS_LEC"]) : 0,
+                                    lab = reader["CRS_LAB"] != DBNull.Value ? Convert.ToInt32(reader["CRS_LAB"]) : 0
                                 });
                             }
                         }
@@ -64,12 +81,13 @@ namespace Fresh_University_Enrollment.Controllers
             }
             catch (Exception ex)
             {
-                // Log exception
+                // Log exception or handle as needed
                 Console.WriteLine($"Error fetching courses: {ex.Message}");
             }
 
             return Json(courses, JsonRequestBehavior.AllowGet);
         }
+
 
         private List<Course> GetCoursesFromDatabase()
         {
