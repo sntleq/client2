@@ -48,42 +48,21 @@
 
     <div class="card mt-4">
         <div class="card-header card-header-profile">
-            Student ID: CTU-2023-0001
-            @* <!-- With model: Student ID: @Model.StudentId --> *@
+            Student ID: @Model.Stud_Code
         </div>
         <div class="card-body profile-info">
-            <p><strong>Name:</strong> Juan Dela Cruz | Santos</p>
-            @* <!-- With model: <p><strong>Name:</strong> @Model.FirstName @Model.LastName | @Model.MiddleName</p> --> *@
-
-            <p><strong>Year:</strong> 1st Year</p>
-            @* <!-- With model: <p><strong>Year:</strong> @Model.YearLevel</p> --> *@
-
-            <p><strong>Semester:</strong> 2nd Semester</p>
-            @* <!-- With model: <p><strong>Semester:</strong> @Model.CurrentSemester</p> --> *@
-
-            <p><strong>Student Status:</strong> Regular</p>
-            @* <!-- With model: <p><strong>Student Status:</strong> @Model.StudentStatus</p> --> *@
-
-            <p><strong>Current Course:</strong> Bachelor of Science in Information Technology</p>
-            @* <!-- With model: <p><strong>Current Course:</strong> @Model.Course</p> --> *@
+            <p><strong>Name:</strong> @Model.Stud_Fname @(Model.Stud_Mname ?? "") @Model.Stud_Lname</p>
 
             <hr>
-            <p><strong>Date of Birth:</strong> January 15, 2005 | <strong>Age:</strong> 20</p>
-            @* <!-- With model: <p><strong>Date of Birth:</strong> @Model.DateOfBirth.ToString("MMMM dd, yyyy") | <strong>Age:</strong> @Model.Age</p> --> *@
+            <p><strong>Date of Birth:</strong> @Model.Stud_Dob.ToString("MMMM dd, yyyy")</p>
 
-            <p><strong>Contact Number:</strong> +63 9XX XXX XXXX</p>
-            @* <!-- With model: <p><strong>Contact Number:</strong> @Model.ContactNumber</p> --> *@
+            <p><strong>Contact Number:</strong> @Model.Stud_Contact</p>
 
-            <p><strong>Email Address:</strong> juan.delacruz@ctu.edu.ph</p>
-            @* <!-- With model: <p><strong>Email Address:</strong> @Model.Email</p> --> *@
+            <p><strong>Email Address:</strong> @Model.Stud_Email</p>
 
             <hr>
-            <p><strong>Address:</strong> 123 Main Street, Cebu City, Philippines</p>
-            @* <!-- With model: <p><strong>Address:</strong> @Model.Address</p> --> *@
+            <p><strong>Address:</strong> @Model.Stud_Address</p>
 
-            <hr>
-            <p><strong>Date Registered:</strong> August 20, 2023</p>
-            @* <!-- With model: <p><strong>Date Registered:</strong> @Model.DateRegistered.ToString("MMMM dd, yyyy")</p> --> *@
         </div>
     </div>
 </div>

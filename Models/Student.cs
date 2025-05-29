@@ -31,9 +31,7 @@
         public string Stud_Address { get; set; }
 
         public string Stud_Password { get; set; }
-
-        public DateTime Created_At { get; set; }
-
+        
         public int Stud_Code { get; set; }
 
     }

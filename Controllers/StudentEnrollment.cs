@@ -109,5 +109,10 @@ namespace Fresh_University_Enrollment.Controllers
             }
             return programs;
         }
+
+        public ActionResult Enroll()
+        {
+            return RedirectToAction("MainHome", "Main");
+        }
     }
 }
